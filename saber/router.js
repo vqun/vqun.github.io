@@ -7,7 +7,7 @@
 // urlReg.exec('http://user:pw@www.baidu.com:8080/ab/cd/e.js?q=9#hehe')
 // ["http://user:pw@www.baidu.com:8080/ab/cd/e.js?q=9#hehe", "http:", "user:pw", "www.baidu.com:8080", "www.baidu.com", "8080", "/ab/cd/e.js?q=9", "/ab/cd/e.js", "?q=9", "q=9", "#hehe"]
 define('router', function(require, exports, module) {
-	var urlReg = /(?:(http\:|https\:)\/\/(?:(\w+\:\w+)\@)?((\w+(?:\.\w+)+)(?:\/?\:(\d+))?))?((\/?[^#?]*)*(\?(\w+\=\w*))?)(#[^\/\\.]+)?/i;
+	var urlReg = /(?:(http\:|https\:)\/\/(?:(\w+\:\w+)\@)?((\w+(?:\.\w+)+)(?:\/?\:(\d+))?))?((\/?[^#?]*)*(\?(\w+\=\w*))?)(#[^\s]+)?/i;
 	var defaultURL = {
 		"href": "",
 		"protocol": "http:",
