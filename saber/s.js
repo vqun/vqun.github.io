@@ -3,6 +3,6 @@ define("s", function(require, exports, module) {
 	var routerInfo = router.parse(location.href);
 	// console.log(routerInfo);
 	debugger;
-	seajs.require(routerInfo.pathname.replace("/test", ""));
-	
+	seajs.require(routerInfo.pathname.replace("#test/", ""));
+
 });
