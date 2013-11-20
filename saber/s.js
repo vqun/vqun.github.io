@@ -4,4 +4,5 @@ define("s", function(require, exports, module) {
 	// console.log(routerInfo);
 	debugger;
 	seajs.require(routerInfo.pathname.replace("/test", ""));
+	
 });
