@@ -27,7 +27,7 @@ define('router', function(require, exports, module) {
 		}
 		url = url.toLowerCase();
 		var parseResult = urlReg.exec(url);
-		if(parseResult[0]) {
+		if(!parseResult[0]) {
 			return defaultURL;
 		};
 		return {
