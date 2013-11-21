@@ -126,7 +126,6 @@ define("utils", function(require, exports, module) {
 		}
 		return trans;
 	};
-	};
 	function parseParam(oSource, oParams, isown) {
 		var key, obj = {};
 		oParams = oParams || {};
