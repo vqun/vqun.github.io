@@ -42,6 +42,6 @@ define("template", function(require, exports, module) {
 		emptyContainer.innerHTML = re.join("");
 		var node = emptyContainer.firstElementChild || emptyContainer.firstChild;
 		emptyContainer.innerHTML = "";
-		return node.;
+		return node;
 	};
 });

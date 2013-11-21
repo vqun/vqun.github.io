@@ -22,7 +22,7 @@ define("utils", function(require, exports, module) {
 				if(conf.type === "xml") {
 					var result = xhr.responseXML;
 				}else {
-					result = eval"("+xhr.responseText+")");
+					result = eval("("+xhr.responseText+")");
 				}
 				conf.success(result);
 			}else {
