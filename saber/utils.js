@@ -16,10 +16,10 @@ define("utils", function(require, exports, module) {
 			'timeout': 30 * 1000,
 			'args': {},
 			'onComplete': null,
-			'onTimeout': $.core.func.empty,
+			'onTimeout': function(){},
 			'uniqueID': null,
 			
-			'onFail': $.core.func.empty,
+			'onFail': function(){},
 			'method': 'get', // post or get
 			'asynchronous': true,
 			'header' : {},
