@@ -1,1 +1,10 @@
-[{"url":"http://weibo.com","name":"Weibo"},{"url":"http://www.sina.com.cn","name":"Sina"}]
+{
+	"code": 10000,
+	"info": [{
+		"url": "http://weibo.com",
+		"name": "Weibo"
+	}, {
+		"url": "http://www.sina.com.cn",
+		"name": "Sina"
+	}]
+}

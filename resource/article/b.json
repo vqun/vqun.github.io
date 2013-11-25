@@ -1,1 +1,6 @@
-{"title":"HeHe, Test B"}
+{
+	"code": 10000,
+	"info": {
+		"title": "HeHe, Test B"
+	}
+}
