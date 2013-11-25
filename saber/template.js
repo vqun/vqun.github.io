@@ -34,7 +34,7 @@ define("template", function(require, exports, module) {
 			currInfo = info[k];
 			for(var k in currInfo) {
 				curr = currInfo[k];
-				tempTpl = tempTpl.replace(new RegExp("\\$\\{\\s*"+k+"\\\\s*}", "gm"), curr);
+				tempTpl = tempTpl.replace(new RegExp("\\$\\{\\s*"+k+"\\s*\\}", "gm"), curr);
 			};
 			re.push(tempTpl);
 			tempTpl = tpl;

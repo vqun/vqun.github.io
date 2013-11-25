@@ -14,6 +14,7 @@ define("s", function(require, exports, module) {
 	function fCallback(result) {
 		// result = {code:10000, info: []}
 		var node = tpl.builder(T, result.info);
+		document.body.innerHTML = "";
 		document.body.appendChild(node);
 		saber.request(file);
 	};
