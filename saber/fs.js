@@ -1,8 +1,7 @@
 define("fs", function(require, exports, module) {
 	// fs.read
 	// var utils = require("utils");
-	var J = require("jQuery");
-	var $ = J.jQuery;
+	var $ = require("jQuery");
 	exports.read = function(file, callback) {
 		// var args = {
 		// 	"url": file,
