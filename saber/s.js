@@ -10,7 +10,7 @@ define("s", function(require, exports, module) {
 	};
 	var jsonFile = file + ".json";
 	fs.read("resource/"+jsonFile, fCallback);
-	var T = tpl.get(jsonFile.split("\/"));
+	var T = tpl.get(file.split("\/"));
 	function fCallback(result) {
 		// result = {code:10000, info: []}
 		var node = tpl.builder(T, result.info);
