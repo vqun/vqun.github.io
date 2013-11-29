@@ -8,8 +8,7 @@ define("s", function(require, exports, module) {
 	if(!file) {
 		return false;
 	};
-	var jsonFile = file + ".json";
-	fs.read("resource/"+jsonFile, fCallback);
+	fs.read("resource/"+file, fCallback);
 	var T = tpl.get(file.split("\/"));
 	function fCallback(result) {
 		// result = {code:10000, info: []}
