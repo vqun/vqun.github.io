@@ -13,7 +13,7 @@ define("template", function(require, exports, module) {
 		}
 	};
 	var emptyContainer = document.createElement("div");
-	var proToString = Array.prototype.toString;
+	var proToString = Object.prototype.toString;
 	exports.get = function(paths) {
 		var p = null;
 		var T = tpl;
