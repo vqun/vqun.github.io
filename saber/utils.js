@@ -48,7 +48,7 @@
 		if(value != undefined) {
 			return (who.style[what] = value);
 		}
-		var computed = document.defaultView.getComputedStyle(who, null) || who.currentStyle;
+		var computed = (document.defaultView && document.defaultView.getComputedStyle(who, null)) || who.currentStyle;
 		return parseInt(computed[what]) || 0
 	}
 	function First(who) {
@@ -62,6 +62,7 @@
 				if(c.nodeType === 1) break;
 				tmp = c;
 			}
+			return c;
 		})(who)
 		return c
 	}
