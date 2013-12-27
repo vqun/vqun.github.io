@@ -25,7 +25,6 @@
 	var input1 = S.$('slide_trigger_1');
 	var div = S.$('slide_outer_1');
 	var ul = S.$('slide_1');
-	var W = S.style(div, 'width');
 	S.on(input1, 'click', slide);
 	var lock = false;
 	var tid = 0;
@@ -36,10 +35,10 @@
 		lock = !lock;
 		e = e || event;
 		var currFirst = S.first(ul);
-		var deltaL = S.style(currFirst, 'width') + S.style(currFirst, 'marginRight');
+		var deltaL = parseInt(S.style(currFirst, 'width')) + parseInt(S.style(currFirst, 'marginRight'));
 		var time = 4;
-		tid = setInterval(function() {
-			var cL = Math.abs(S.style(ul, 'left'));
+		tid = setTimeout(function() {
+			var cL = Math.abs(parseInt(S.style(ul, 'left')));
 			if(cL >= deltaL && time) {
 				--time;
 				ul.appendChild(currFirst);
@@ -47,11 +46,13 @@
 				S.style(ul, 'left', 0);
 				if(!time) {
 					lock = !lock;
-					clearInterval(tid);
+					clearTimeout(tid);
+					return true;
 				}
-				return false;
+			}else {
+				S.style(ul, 'left', -cL-5+'px');
 			}
-			S.style(ul, 'left', -cL-5+'px')
+			tid = setTimeout(arguments.callee, 10)
 		}, 10);
 	}
 </script>

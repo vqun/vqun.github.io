@@ -49,7 +49,12 @@
 			return (who.style[what] = value);
 		}
 		var computed = (document.defaultView && document.defaultView.getComputedStyle(who, null)) || who.currentStyle;
-		return parseInt(computed[what]) || 0
+		var re = computed[what];
+		if(what == 'width' || what == 'height') {
+			what = what == 'width' ? 'offsetWidth': 'offsetHeight';
+			re = re === 'auto' ? who[what] : re
+		}
+		return re || ''
 	}
 	function First(who) {
 		if(!who || !who.nodeType || who.nodeType !== 1) {
