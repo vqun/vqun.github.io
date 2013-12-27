@@ -16,8 +16,10 @@
 			var all = (ref && IsNode(ref) && ref.getElementsByTagName("*")) || S.All;
 			var k = 0;
 			var curr = null;
+			var reg = new RegExp('\\b' + who + '\\b');
 			while(curr = all[k]) {
-				new RegExp('\\b' + who + '\\b').test(curr.className) && ++k && re.push(curr);
+				reg.test(curr.className) && re.push(curr);
+				++k;
 			}
 			all = curr = null;
 		}

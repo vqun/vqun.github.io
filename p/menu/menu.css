@@ -1,0 +1,45 @@
+.clear{clear:both;}
+section, .section{
+	border: 1px dashed red;
+	padding: 10px;
+}
+menu, .menu{
+	margin: 0 auto;
+}
+ul{
+	font-size: 20px;
+	margin:0;
+	padding:0;
+	zoom: 1;
+}
+li{
+	list-style: none;
+	height:2em;
+}
+.item{
+	float:left;
+	background-color: rgb(243, 83, 8);
+	position: relative;
+}
+.item a{
+	display: block;
+	text-decoration: none;
+	padding: .5em 1em;
+}
+.item a:hover{
+	background-color: #f77;
+}
+.subMenu{
+	margin-top: 3px;
+	position: absolute;
+	background-color: blue;
+}
+.subItem{
+	width:6em;
+	text-align: center;
+}
+.subItem a{
+	width: 100%;
+	color: white;
+	padding: .5em 0;
+}
