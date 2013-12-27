@@ -3,53 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Slider</title>
-	<style type="text/css">
-	section{
-		display: block;
-		border: 1px dashed red;
-		padding: 10px;
-	}
-	a{
-		color: #FC062E;
-		font-weight: bolder;
-		text-decoration: none;
-		padding: 10px;
-		background-color: #FFAD55;
-		font-size: 20px;
-		box-shadow: 3px 3px #DD7E16;
-		border-radius: 5px;
-	}/* 
-	a:hover{
-		background-color: rgb(204, 117, 6);
-	}
-	a:active{
-		background-color: rgb(204, 117, 6);
-	} */
-	div{
-		width:350px;
-		height: 60px;
-		margin: 0 auto;
-		overflow: hidden;
-		background-color: #ddd;
-		position: relative;
-	}
-	ul{
-		position: absolute;
-		top: 0;
-		left: 0;
-		float: left;
-		width: 1000px;
-		height: 100%;
-		margin: 0;
-		padding: 0;
-	}
-	li{
-		list-style: none;
-		float: left;
-		height: 60px;
-		margin-right: 10px;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="slider.css">
 </head>
 <body>
 	<section>
@@ -66,71 +20,39 @@
 		</div>
 	</section>
 </body>
-<script>
-	var $ = document.getElementById;
-	var input1 = document.getElementById('slide_trigger_1');
-	var div = document.getElementById('slide_outer_1');
-	var ul = document.getElementById('slide_1');
-	var W = Style(div, 'width');
-	try{
-		input1.addEventListener('click', swap, true);
-	}catch(e1) {
-		try {
-			input1.attachEvent('onclick', swap);
-		}catch(e2) {
-			input1.onclick = swap;
-		}
-	}
-	var lock = 0;
+<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript">
+	var input1 = S.$('slide_trigger_1');
+	var div = S.$('slide_outer_1');
+	var ul = S.$('slide_1');
+	var W = S.style(div, 'width');
+	S.on(input1, 'click', slide);
+	var lock = false;
 	var tid = 0;
-	function swap(e) {
+	function slide(e) {
 		if(lock) {
 			return false;
 		}
 		lock = !lock;
 		e = e || event;
-		var currFirst = First(ul);
-		var deltaL = Style(currFirst, 'width') + Style(currFirst, 'marginRight');
+		var currFirst = S.first(ul);
+		var deltaL = S.style(currFirst, 'width') + S.style(currFirst, 'marginRight');
 		var time = 4;
 		tid = setInterval(function() {
-			var cL = Math.abs(Style(ul, 'left'));
+			var cL = Math.abs(S.style(ul, 'left'));
 			if(cL >= deltaL && time) {
 				--time;
 				ul.appendChild(currFirst);
-				currFirst = First(ul);
-				Style(ul, 'left', 0);
+				currFirst = S.first(ul);
+				S.style(ul, 'left', 0);
 				if(!time) {
 					lock = !lock;
 					clearInterval(tid);
 				}
 				return false;
 			}
-			Style(ul, 'left', -cL-10+'px')
+			S.style(ul, 'left', -cL-10+'px')
 		}, 10);
-	}
-	function Style(who, what, value) {
-		if(!who || !who.nodeType || who.nodeType !== 1) {
-			return '';
-		}
-		if(value != undefined) {
-			return (who.style[what] = value);
-		}
-		var computed = document.defaultView.getComputedStyle(who, null) || who.currentStyle;
-		return parseInt(computed[what]) || 0
-	}
-	function First(who) {
-		if(!who || !who.nodeType || who.nodeType !== 1) {
-			return null;
-		}
-		var c = null;
-		c = who.firstElementChild || (function(el){
-			var tmp = el;
-			while(c = tmp.firstChild) {
-				if(c.nodeType === 1) break;
-				tmp = c;
-			}
-		})(who)
-		return c
 	}
 </script>
 </html>

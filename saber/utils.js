@@ -1,117 +1,84 @@
-define("utils", function(require, exports, module) {
-	var JSON = {
-		query: function(json) {
-			if(Object.prototype.toString(json) !== "[object Object") return "";
-			var querys = []
-			for(var k in json) {
-				querys.push(k+"="+(json[k]||""))
+(function(global, undefined) {
+	global.Saber = global.S = {};
+	var S = global.Saber;
+	var ArraySlice = Array.prototype.slice,
+		ObjToString = Object.prototype.toString;
+	S.All = document.getElementsByTagName("*");
+	S.$ = function(id) {return document.getElementById(id)};
+	S.C = function(who, ref) {
+		var re = [];
+		if(!Is(who, 'string')) return re;
+		who = Trim(who);
+		try{
+			var temp = ref && IsNode(ref) && ref.getElementsByClassName(who) || [];
+			re = ArraySlice.call(temp)
+		}catch(err) {
+			var all = (ref && IsNode(ref) && ref.getElementsByTagName("*")) || S.All;
+			var k = 0;
+			var curr = null;
+			while(curr = all[k]) {
+				new RegExp('\\b' + who + '\\b').test(curr.className) && ++k && re.push(curr);
 			}
-			return querys.join("&")
+			all = curr = null;
 		}
+		return re;
+	};
+	S.trim = Trim;
+	S.style = Style;
+	S.first = First;
+	S.on = On;
+	S.off = Off;
+	S.isNode = IsNode;
+	S.is = Is;
+	function Trim(who) {
+		if(!Is(who, 'string')) {return who}
+		return who.replace(/^\s+|\s+$/, '')
 	}
-	var defaultArgs = {
-		"url": "",
-		"method": "get",
-		"data": {},
-		"type": "json",
-		"timeout": 10,
-		"async": true,
-		"header": {},
-		"onSuccess": function() {},
-		"onError": function() {},
-		"onTimeout": function() {}
+	function IsNode(who) {return !!who && !!who.nodeType && who.nodeType===1}
+	function Is(who, what) {
+		var temp = ObjToString.call(who).slice(8, -1);
+		return temp.toLowerCase() === what
 	}
-	xhrCache = [];
-	exports.ajax = function(args) {
-		var opts = parseParam(defaultArgs, args);
-		if(!opts.url) throw new Error("Need the request url");
-		opts["type"] = opts["type"].toLowerCase();
-		opts["data"]["_rnd"] = new Date().getTime();
-		var query = JSON.query(opts["data"]);
-
-		var inter = getXHR();
-		inter.onreadystatechange = rsChange;
-		if(!opts['header']['Content-Type']){
-			opts['header']['Content-Type'] = 'application/x-www-form-urlencoded';
+	function Style(who, what, value) {
+		if(!who || !who.nodeType || who.nodeType !== 1) {
+			return '';
 		}
-		if(!opts['header']['X-Requested-With']){
-			opts['header']['X-Requested-With'] = 'XMLHttpRequest';
+		if(value != undefined) {
+			return (who.style[what] = value);
 		}
-		var isGet = opts["method"].toLowerCase()==="get";
-		inter.open(opts["method"], opts["url"]+(isGet&&("?"+query)||""), opts["async"])
-		for(var k in opts["header"]) {
-			inter.setRequestHeader(k, opts["header"][k])
+		var computed = document.defaultView.getComputedStyle(who, null) || who.currentStyle;
+		return parseInt(computed[what]) || 0
+	}
+	function First(who) {
+		if(!who || !who.nodeType || who.nodeType !== 1) {
+			return null;
 		}
-		inter.send(isGet&&""||query);
-		var to = setTimeout(function() {
-			try{
-				inter.abort();
-				opts["onTimeout"]({}, inter);
-				opts["onError"]({}, inter)
-			}catch(e){}
-			clearTimeout(to)
-		}, opts["timeout"]*1000);
-		return inter;
-		function rsChange() {
-			if(inter.readyState === 4) {
-				clearTimeout(to);
-				var data = "";
-				try{
-					if(opts["type"] === "json") {
-						data = eval("("+(inter.responseText &&
-							typeof inter.responseText === "string" &&
-							inter.responseText)+")")|| {};
-					}else if(opts["type"] === "xml") {
-						data = inter.responseXML
-					}else if(opts["type"] === 'text') {
-						data = inter.responseText
-					}else {
-						data = {}
-					}
-				}catch(e){
-					data = opts["url"]+": return error data"
-				}
-				if(inter.status === 200) {
-					opts["onSuccess"](data, inter)
-				}else {
-					opts["onError"](data, inter)
-				}
+		var c = null;
+		c = who.firstElementChild || (function(el){
+			var tmp = el;
+			while(c = tmp.firstChild) {
+				if(c.nodeType === 1) break;
+				tmp = c;
 			}
-		}
+		})(who)
+		return c
 	}
-	function parseParam(oSource, oParams, isown) {
-		var key, obj = {};
-		oParams = oParams || {};
-		for (key in oSource) {
-			obj[key] = oSource[key];
-			if (oParams[key] != null) {
-				if (isown) {
-					if (oSource.hasOwnProperty(key)) {
-						obj[key] = oParams[key];
-					}
-				}
-				else {
-					obj[key] = oParams[key];
-				}
-			}
+	function On(el, type, handler) {return evtAccess(el, type, handler)}
+	function Off() {return evtAccess(el, type, handler, 1)}
+	function evtAccess(el, type, handler, off) {
+		if(!IsNode(el) || !type || !Is(handler, 'function')) {
+			return false
 		}
-		return obj;
-	}
-	function getXHR() {
-		var xhr = null;
-		try {
-			xhr = new XMLHttpRequest();
-		}catch (try_MS) {
+		var action = (!off && 'addEventListener') || 'removeEventListener';
+		try{
+			el[action](type, handler, true);
+		}catch(e1) {
 			try {
-				xhr = new ActiveXObject("Msxml2.XMLHTTP");
-			}catch (other_MS) {
-				try {
-					xhr = new ActiveXObject("Microsoft.XMLHTTP");
-				}catch (e) {
-					xhr = null;
-				}
+				action = !off && 'attachEvent' || 'detachEvent';
+				el[action]('on'+type, handler);
+			}catch(e2) {
+				el['on'+type] = handler;
 			}
 		}
-		return xhr;
 	}
-});
+})(window)

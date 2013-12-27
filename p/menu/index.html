@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Menu</title>
+	<style type="text/css">
+	ul{
+		font-size: 20px;
+		margin:0;
+		padding:0;
+	}
+	#menu1{float:left;}
+	li{
+		list-style: none;
+		height:2em;
+		line-height: 2em;
+	}
+	.item{
+		float:left;
+		background-color: rgba(243, 83, 8, .7);
+		position: relative;
+	}
+	.item a{
+		text-decoration: none;
+		padding: .5em 1em;
+	}
+	.item a:hover{
+		background-color: #f77;
+	}
+	.subMenu{
+		margin-top: 3px;
+		position: absolute;
+		background-color: blue;
+	}
+	.subItem{
+		width:6em;
+		text-align: center;
+	}
+	.subItem a{
+		display: inline-block;
+		width: 100%;
+		color: white;
+		padding: 0;
+	}
+	</style>
+</head>
+<body>
+	<ul id="menu1">
+		<li class="item"><a href="#">Home</a></li>
+		<li class="item">
+			<a href="#">Hot▼</a>
+			<ul class="subMenu" style="display:none;">
+				<li class="subItem"><a href="#">HotWeibo</a></li>
+				<li class="subItem"><a href="#">Topic</a></li>
+				<li class="subItem"><a href="#">Welfare</a></li>
+			</ul>
+		</li>
+		<li class="item"><a href="#">Apps</a></li>
+		<li class="item">
+			<a href="#">Games▼</a>
+			<ul class="subMenu" style="display:none;">
+				<li class="subItem"><a href="#">女神联盟</a></li>
+				<li class="subItem"><a href="#">火影传说</a></li>
+				<li class="subItem"><a href="#">天才樱木</a></li>
+				<li class="subItem"><a href="#">暗黑西游OL</a></li>
+			</ul>
+		</li>
+	</ul>
+</body>
+<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript">
+	var ul = S.$('menu1');
+	S.on(ul, 'mouseover', showMenu);
+	S.on(ul, 'mouseout', hideMenu);
+	var showTid = 0, hideTid = 0;
+	var currShow = null;
+	function showMenu(e) {
+		clearTimeout(hideTid);
+		showTid = setTimeout(function() {
+			var subMenu = getSubmenu(e)
+			if(currShow && subMenu !== currShow) currShow.style.display = 'none';
+			subMenu && (currShow = subMenu) && (subMenu.style.display = '');
+			subMenu = null;
+		}, 200)
+	}
+	function hideMenu(e) {
+		clearTimeout(showTid);
+		hideTid = setTimeout(function() {
+			var subMenu = getSubmenu(e)
+			subMenu && !(currShow = null) && (subMenu.style.display = 'none');
+			subMenu = null;
+		}, 200)
+	}
+	function getSubmenu(evt) {
+		evt = evt || event;
+		var el = evt.target || evt.srcElement;
+		while(el.tagName.toLowerCase()!== 'li' || el.className !== 'item') {
+			el = el.parentNode
+		}
+		return S.C('subMenu', el)[0];
+	}
+</script>
+</html>
