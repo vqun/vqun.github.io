@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Animate Lib Test</title>
+</head>
+<body>
+	<input type="button" id="start" value="Start" />
+	<input type="button" id="pause" value="Pause" />
+	<input type="button" id="resume" value="Resume" />
+	<input type="button" id="stop" value="Stop" />
+	<div id="square" style="width:100px;height:100px;background-color:red;"></div>
+</body>
+<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript" src="../../saber/animate.js"></script>
+<script type="text/javascript">
+	var div = Saber.$("square");
+	var start = Saber.$("start");
+	var pause = Saber.$("pause");
+	var resume = Saber.$("resume");
+	var stop = Saber.$("stop");
+	var aniTest = null;
+	Saber.on(start, "click", function(e) {
+		aniTest = Saber.ani.animate(div, "linear", {
+			"duration": 5000
+		});
+		aniTest.play({
+			"height": 200
+		})
+	})
+	Saber.on(pause, "click", function() {
+		aniTest.pause()
+	})
+	Saber.on(resume, "click", function() {
+		aniTest.resume()
+	})
+	Saber.on(stop, "click", function() {
+		aniTest.stop()
+	})
+</script>
+</html>

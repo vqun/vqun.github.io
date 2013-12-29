@@ -27,22 +27,51 @@
 	};
 	S.trim = Trim;
 	S.style = Style;
+	S.styles = Styles;
+	S.cssParser = CssParser;
+	S.cssText = CssText;
 	S.first = First;
 	S.on = On;
 	S.off = Off;
 	S.isNode = IsNode;
 	S.is = Is;
+	S.emptyFunc = function() {}
+	S.forEach = ForEach;
+	S.parseParam = ParseParam;
+	function ParseParam(src, obj) {
+		return ForEach(src, function(key, value) {
+			return obj[key]||value
+		})
+	}
+	function ForEach(who, handler) {
+		if(Is(who, "array")){
+			var re = [];
+			for(var k = 0, len = who.length; k < len; k++) {
+				re.push(handler(k, who[k]))
+			}
+		}else{
+			re = {};
+			for(var j in who) {
+				re[j] = handler(j, who[j])
+			}
+		}
+		return re;
+	}
 	function Trim(who) {
 		if(!Is(who, 'string')) {return who}
 		return who.replace(/^\s+|\s+$/, '')
 	}
-	function IsNode(who) {return !!who && !!who.nodeType && who.nodeType===1}
+	function clear(who) {}
+	function IsNode(who) {return !!who && who.nodeType===1}
 	function Is(who, what) {
+		if(what.toLowerCase() === 'node') {
+			return IsNode(who)
+		}
 		var temp = ObjToString.call(who).slice(8, -1);
-		return temp.toLowerCase() === what
+		return temp.toLowerCase() === what.toLowerCase()
 	}
 	function Style(who, what, value) {
-		if(!who || !who.nodeType || who.nodeType !== 1) {
+		if(!IsNode(who)) {
 			return '';
 		}
 		if(value != undefined) {
@@ -56,8 +85,29 @@
 		}
 		return re || ''
 	}
+	function Styles(who, what, set) {
+		if(!IsNode(who)) {
+			return {}
+		}
+		if(!!set){
+			var oldCssText = who.style.cssText;
+			return (who.style.cssText = oldCssText + CssParser(what));
+		}else {
+			return ForEach(what, function(key, value) {
+				return Style(who, key)
+			})
+		}
+	}
+	function CssParser(what) {}
+	function CssText(who) {
+		var cssText = who.style.cssText.split(";");
+		var controlor = {};
+		controlor.push = function() {}
+		controlor.toString  = function() {}
+		return controlor
+	}
 	function First(who) {
-		if(!who || !who.nodeType || who.nodeType !== 1) {
+		if(!IsNode(who)) {
 			return null;
 		}
 		var c = null;
