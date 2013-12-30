@@ -20,14 +20,14 @@
 	var resume = Saber.$("resume");
 	var stop = Saber.$("stop");
 	var aniTest = null;
-	aniTest = Saber.ani.animate(div, "spring", {
-		"duration": 5000
+	aniTest = Saber.ani.animate(div, "damper", {
+		"duration": 1000
 	});
 	Saber.on(start, "click", function(e) {
 		aniTest.play({
-			"height": 200,
-			"width": 200,
-			"opacity": 0.1
+			"height": 300,
+			"width": 200/*,
+			"opacity": 0.1*/
 		})
 	})
 	Saber.on(pause, "click", function() {

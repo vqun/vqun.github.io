@@ -104,7 +104,10 @@
 				return sX + (eX-sX)*Math.sin(.5*Math.PI*t/eT)
 			},
 			"spring2": function(sX, sT, eX, eT, t) {
-				return sX + (eX-sX)*Math.sin(.65*Math.PI*t/eT)/Math.sin(.65*Math.PI)
+				return .5*(eX+sX + (eX-sX)*Math.sin(Math.PI*(t/eT-.5)))
+			},
+			"damper": function(sX, sT, eX, eT, t) {
+				return sX + eT/t * Math.sin(t/eT * Math.asin(t*(eX-sX)/eT))
 			}
 		}
 		return {
