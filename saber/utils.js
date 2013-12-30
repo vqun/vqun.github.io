@@ -25,9 +25,13 @@
 		}
 		return re;
 	};
+	S.IE = +navigator.userAgent.replace(/.*?MSIE\s+(\d+\.\d*).*/, "$1")||0;
 	S.trim = Trim;
 	S.style = Style;
 	S.styles = Styles;
+	// add the units to the styles
+	S.cssUnits = CssUnits;
+	// parse the css json to a cssText string and add the units to the styles
 	S.cssParser = CssParser;
 	S.cssText = CssText;
 	S.first = First;
@@ -38,21 +42,29 @@
 	S.emptyFunc = function() {}
 	S.forEach = ForEach;
 	S.parseParam = ParseParam;
+	S.clear = Clear;
 	function ParseParam(src, obj) {
 		return ForEach(src, function(key, value) {
 			return obj[key]||value
 		})
 	}
-	function ForEach(who, handler) {
+	function ForEach(who, handler, type) {
 		if(Is(who, "array")){
 			var re = [];
 			for(var k = 0, len = who.length; k < len; k++) {
 				re.push(handler(k, who[k]))
 			}
 		}else{
-			re = {};
-			for(var j in who) {
-				re[j] = handler(j, who[j])
+			if(Is(type, "array")) {
+				re = [];
+				for(var j in who) {
+					re.push(handler(j, who[j]))
+				}
+			}else {
+				re = {};
+				for(var j in who) {
+					re[j] = handler(j, who[j])
+				}
 			}
 		}
 		return re;
@@ -61,7 +73,12 @@
 		if(!Is(who, 'string')) {return who}
 		return who.replace(/^\s+|\s+$/, '')
 	}
-	function clear(who) {}
+	function Clear(who) {
+		if(!Is(who, "string")) {
+			return who
+		}
+		return who.replace(/\s+/g, "")
+	}
 	function IsNode(who) {return !!who && who.nodeType===1}
 	function Is(who, what) {
 		if(what.toLowerCase() === 'node') {
@@ -74,16 +91,55 @@
 		if(!IsNode(who)) {
 			return '';
 		}
+		var ret = "";
 		if(value != undefined) {
+			if(S.IE&&S.IE<9) {
+				switch(what){
+					case "opacity":
+						who.style.filter="alpah(opacity="+(+value*100)+")";
+						if (!who.currentStyle || !who.currentStyle.hasLayout) {
+							who.style.zoom = 1;
+						}
+					return value;
+					case "float":
+						what = "styleFloat";
+					break;
+				}
+			}else {
+				if(what=="float") {
+					what="cssFloat"
+				}
+			}
 			return (who.style[what] = value);
 		}
+		if(S.IE&&S.IE<9) {
+			ret = 100;
+			switch(what){
+				case "opacity":
+					try{
+						ret = who.filters["alpha"].opacity
+					}catch(e) {
+						try{
+							ret = who.filters["DXImageTransform.Microsoft.Alpha"].opacity
+						}catch(e) {}
+					}
+				return ret/100;
+				case "float":
+					what = "styleFloat";
+				break;
+			}
+		}else {
+			if(what=="float") {
+				what="cssFloat"
+			}
+		}
 		var computed = (document.defaultView && document.defaultView.getComputedStyle(who, null)) || who.currentStyle;
-		var re = computed[what];
+		ret = computed[what];
 		if(what == 'width' || what == 'height') {
 			what = what == 'width' ? 'offsetWidth': 'offsetHeight';
-			re = re === 'auto' ? who[what] : re
+			ret = ret === 'auto' ? who[what] : ret
 		}
-		return re || ''
+		return ret || ""
 	}
 	function Styles(who, what, set) {
 		if(!IsNode(who)) {
@@ -98,12 +154,68 @@
 			})
 		}
 	}
-	function CssParser(what) {}
-	function CssText(who) {
-		var cssText = who.style.cssText.split(";");
+	function CssUnits(who) {
 		var controlor = {};
-		controlor.push = function() {}
-		controlor.toString  = function() {}
+		controlor.add = function() {
+			return ForEach(who, function(key, value) {
+				var ret = value;
+				if(CssUnits.Maps[key] && Is(value, "number")) {
+					ret += "px"
+				}
+				return ret
+			})
+		}
+		controlor.remove = function() {
+			return ForEach(who, function(key, value) {
+				return /^(\d+(\.\d*)?)[a-zA-Z]*/.test(value) && parseInt(value) || value
+			})
+		}
+		return controlor
+	}
+	CssUnits.Maps = {
+		"height": 1,
+		"width": 1,
+		"left": 1,
+		"top": 1,
+		"padding": 1,
+		"margin": 1,
+		"borderWidth": 1,
+		"right": 1,
+		"bottom": 1
+	}
+	function CssParser(who) {
+		var prefix = ";";
+		var cssArr = ForEach(who, function(key, value) {
+			if(key=="opacity" && S.IE&&S.IE<9){
+				key = "filter";
+				value = "alpha(opacity="+(+value*100)+")"
+			}
+			return key + ":" + value
+		}, [])
+		return prefix + cssArr.join(";")
+	}
+	function CssText(who) {
+		if(!IsNode(who)) {
+			return null
+		}
+		var cssTextArr = who.style.cssText.split(";");
+		var cssText = {};
+		for(var k in cssTextArr) {
+			var temp = cssTextArr[k].split(":")
+			temp.length == 2 && (cssText[Trim(temp[0])] = Trim(temp[1]))
+		}
+		var controlor = {};
+		controlor.push = function(who) {
+			ForEach(who, function(key, value) {
+				cssText[key] = value
+				return value
+			})
+			return this
+		}
+		controlor.toString  = function() {
+			cssText = CssUnits(cssText).add();
+			return CssParser(cssText)
+		}
 		return controlor
 	}
 	function First(who) {

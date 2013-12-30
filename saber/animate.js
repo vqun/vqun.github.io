@@ -5,6 +5,7 @@
 		forEach = context.forEach,
 		styles = context.styles, // get computed styles
 		cssText = context.cssText,
+		cssUnits = context.cssUnits;
 		// parse the css json to a cssText string and add the units to the styles
 		// cssParser = context.cssParser;
 	var ani = context.ani = {};
@@ -28,16 +29,17 @@
 		var player = {
 			"playID": 0,
 			"target": null,
-			"status": ""
+			"status": "non-start"
 		}
 		controlor.play = function(to) {
-			if(!player) {
+			if(!player || player.status == "playing") {
 				return false;
 			}
+			player.status = "playing";
 			player.target = to;
 			var startT = new Date().getTime();
 			var startCssText = cssText(who);
-			var startStyles = styles(who, to);
+			var startStyles = cssUnits(styles(who, to)).remove();
 			var endStyles = to;
 			var endT = by.duration;
 			by.start(who);
@@ -59,6 +61,9 @@
 			}, by.frameTime)
 		}
 		controlor.finish = function(to) {
+			if(!player || player.status == "playing") {
+				return false;
+			}
 			var oldEnd = by.end;
 			by.end = function(who) {
 				by.end(who);
@@ -67,11 +72,11 @@
 			this.play(to)
 		}
 		controlor.pause = function() {
-			player && clearTimeout(player.playID)
+			player && (player.status = "pause") && clearTimeout(player.playID)
 			return this;
 		}
 		controlor.resume = function() {
-			player && player.target && this.play(player.target)
+			player && (player.status == "pause") && player.target && this.play(player.target)
 			return this;
 		}
 		controlor.stop = function() {
@@ -85,7 +90,6 @@
 		return controlor;
 	}
 	function Arithmetic(sX, sT, eX, eT, t) {
-		// 动画计算，以开始、结束和当前时间做参数，计算当前动画值
 		if(!is(this, "function")) {
 			throw "Need to be called as Arithmetic.apply(this, arguments), this must be a animate algorithm"
 		}
@@ -100,7 +104,7 @@
 				return sX + (eX-sX)*Math.sin(.5*Math.PI*t/eT)
 			},
 			"spring2": function(sX, sT, eX, eT, t) {
-				return sX + (eX-sX)*Math.sin(2*Math.PI*t/eT)
+				return sX + (eX-sX)*Math.sin(.65*Math.PI*t/eT)/Math.sin(.65*Math.PI)
 			}
 		}
 		return {

@@ -9,7 +9,7 @@
 	<input type="button" id="pause" value="Pause" />
 	<input type="button" id="resume" value="Resume" />
 	<input type="button" id="stop" value="Stop" />
-	<div id="square" style="width:100px;height:100px;background-color:red;"></div>
+	<div id="square" style="width:100px;height:100px;background-color:#f00;"></div>
 </body>
 <script type="text/javascript" src="../../saber/utils.js"></script>
 <script type="text/javascript" src="../../saber/animate.js"></script>
@@ -20,12 +20,14 @@
 	var resume = Saber.$("resume");
 	var stop = Saber.$("stop");
 	var aniTest = null;
+	aniTest = Saber.ani.animate(div, "spring", {
+		"duration": 5000
+	});
 	Saber.on(start, "click", function(e) {
-		aniTest = Saber.ani.animate(div, "linear", {
-			"duration": 5000
-		});
 		aniTest.play({
-			"height": 200
+			"height": 200,
+			"width": 200,
+			"opacity": 0.1
 		})
 	})
 	Saber.on(pause, "click", function() {
@@ -37,5 +39,14 @@
 	Saber.on(stop, "click", function() {
 		aniTest.stop()
 	})
+	// var cssText = Saber.cssText(div)
+	// console.log("1: ", cssText.toString())
+	// cssText.push({
+	// 	height: 200,
+	// 	width: 200,
+	// 	padding: 10
+	// })
+	// console.log("2: ", cssText.toString())
+	// div.style.cssText = cssText.toString()
 </script>
 </html>
