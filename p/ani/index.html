@@ -3,13 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Animate Lib Test</title>
+	<style type="text/css">
+	#square{
+		width: 100px;
+		height: 100px;
+		border-radius: 5px;
+	}
+	</style>
 </head>
 <body>
 	<input type="button" id="start" value="Start" />
 	<input type="button" id="pause" value="Pause" />
 	<input type="button" id="resume" value="Resume" />
 	<input type="button" id="stop" value="Stop" />
-	<div id="square" style="width:100px;height:100px;background-color:#f00;"></div>
+	<div id="square" style="background-color: #f00;"></div>
 </body>
 <script type="text/javascript" src="../../saber/utils.js"></script>
 <script type="text/javascript" src="../../saber/animate.js"></script>
@@ -20,14 +27,14 @@
 	var resume = Saber.$("resume");
 	var stop = Saber.$("stop");
 	var aniTest = null;
-	aniTest = Saber.ani.animate(div, "damper", {
+	aniTest = Saber.ani.animate(div, "linear", {
 		"duration": 1000
 	});
 	Saber.on(start, "click", function(e) {
 		aniTest.play({
 			"height": 300,
-			"width": 200/*,
-			"opacity": 0.1*/
+			"width": 200,
+			"backgroundColor": "#0f0"
 		})
 	})
 	Saber.on(pause, "click", function() {

@@ -1,6 +1,7 @@
 (function(context, undefined) {
 	context = context || {};
 	var is = context.is,
+		clear = context.clear,
 		parseParam = context.parseParam,
 		forEach = context.forEach,
 		styles = context.styles, // get computed styles
@@ -52,8 +53,16 @@
 					return true;
 				}
 				var nowStyles = forEach(to, function(key, value) {
-					var startX = startStyles[key],
-						endX = value;
+					var startX = ColorAnalysis(key, startStyles[key]),
+						endX = ColorAnalysis(key, value);
+					if(is(startX, "array")) {
+						return "#"+forEach(startX, function(k, v) {
+							var newX = Math.floor(Arithmetic.apply(algorithm, [v, 0, endX[k], endT, now])).toString(16);
+							return newX.replace(/(\b\w\b)/, function(m0, m1){
+								return "0"+m1
+							})
+						}).join("")
+					}
 					return Arithmetic.apply(algorithm, [startX, 0, endX, endT, now])
 				});
 				who.style.cssText = startCssText.push(nowStyles).toString();
@@ -122,6 +131,31 @@
 		}
 		function Use(name) {
 			return algorithms[name] || algorithms["linear"]
+		}
+	}
+	function ColorAnalysis(key, value) {
+		if(key.indexOf("color") !== -1||key.indexOf("Color")!==-1) {
+			if(value.indexOf("rgb")!==-1) {
+				value = clear(value);
+				var temp = value.slice(4, -1).split(",");
+				var ret = forEach(temp, function(k,v){return parseInt(v, 10)});
+				return ret
+			}else{
+				var temp = value.slice(1).split("");
+				if(temp.length===3){
+					return forEach(temp, function(k,v){
+						return parseInt(v+v, 16)
+					})
+				}else{
+					var ret = [];
+					for(var k=0, len=temp.length; k<len;k++){
+						ret.push(parseInt(temp[k]+temp[++k], 16))
+					}
+					return ret
+				}
+			}
+		}else{
+			return value
 		}
 	}
 })(Saber)

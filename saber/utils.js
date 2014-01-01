@@ -33,6 +33,7 @@
 	S.cssUnits = CssUnits;
 	// parse the css json to a cssText string and add the units to the styles
 	S.cssParser = CssParser;
+	S.cssFormat = CssFormat;
 	S.cssText = CssText;
 	S.first = First;
 	S.on = On;
@@ -154,6 +155,7 @@
 			})
 		}
 	}
+	function RGBA() {}
 	function CssUnits(who) {
 		var controlor = {};
 		controlor.add = function() {
@@ -167,7 +169,8 @@
 		}
 		controlor.remove = function() {
 			return ForEach(who, function(key, value) {
-				return /^(\d+(\.\d*)?)[a-zA-Z]*/.test(value) && parseInt(value) || value
+				return CssUnits.Maps[key] && parseFloat(value) || value
+				// return /^(\d+(\.\d*)?)[a-zA-Z]*/.test(value) && parseFloat(value) || value
 			})
 		}
 		return controlor
@@ -185,7 +188,8 @@
 	}
 	function CssParser(who) {
 		var prefix = ";";
-		var cssArr = ForEach(who, function(key, value) {
+		var formated = CssFormat(who);
+		var cssArr = ForEach(formated, function(key, value) {
 			if(key=="opacity" && S.IE&&S.IE<9){
 				key = "filter";
 				value = "alpha(opacity="+(+value*100)+")"
@@ -193,6 +197,46 @@
 			return key + ":" + value
 		}, [])
 		return prefix + cssArr.join(";")
+	}
+	// Delete/Add the dashes to change the keys in format "webkitBorderRadius"/"-webkit-border-radius"
+	function CssFormat(who) {
+		var ret = {}
+		ForEach(who, function(key, value) {
+			if(!/\-/.test(key)){
+				// format "webkitBorderRadius" to "-webkit-border-radius"
+				ret[addDash(key)] = value
+				return value
+			}
+			ret[removeDash(key)]=value;
+			return value
+		})
+		return ret
+	}
+	function addDash(who) {
+		return who.replace(/[A-Z]/g, function(m){return "-"+m.toLowerCase()})
+	}
+	function removeDash(who) {
+		var keys = who.split("-");
+		var newKeys = null;
+		var start = 1;
+		if(!keys[0] && (keys[1]=="ms"||keys[1]=="webkit")) {
+			// the ms and webkit is in format of "ms" or "webkit", start = 2
+			// the others is in format of "MozBorderRadius" || "borderRadius", start = 1
+			start = 2;
+		}
+		newKeys = ForEach(keys.slice(start), function(k, v) {
+			return FirstUpper(v)
+		})
+		newKeys.splice(0, 0, keys[start-1]);
+		return newKeys.join("")
+	}
+	function FirstUpper(who) {
+		if(!Is(who, "string")) {
+			return who
+		}
+		// var ret = who.split("");
+		// return ret[0].toUpperCase()+ret.slice(1).join("")
+		return who.replace(/(^.)(.*)/, function(m0,m1,m2){return m1.toUpperCase()+m2})
 	}
 	function CssText(who) {
 		if(!IsNode(who)) {
@@ -202,7 +246,7 @@
 		var cssText = {};
 		for(var k in cssTextArr) {
 			var temp = cssTextArr[k].split(":")
-			temp.length == 2 && (cssText[Trim(temp[0])] = Trim(temp[1]))
+			temp.length == 2 && (cssText[removeDash(Trim(temp[0]))] = Trim(temp[1]))
 		}
 		var controlor = {};
 		controlor.push = function(who) {
