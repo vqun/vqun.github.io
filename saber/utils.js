@@ -134,7 +134,7 @@
 				what="cssFloat"
 			}
 		}
-		var computed = (document.defaultView && document.defaultView.getComputedStyle(who, null)) || who.currentStyle;
+		var computed = who.currentStyle || (document.defaultView && document.defaultView.getComputedStyle(who, null));
 		ret = computed[what];
 		if(what == 'width' || what == 'height') {
 			what = what == 'width' ? 'offsetWidth': 'offsetHeight';
@@ -155,13 +155,12 @@
 			})
 		}
 	}
-	function RGBA() {}
 	function CssUnits(who) {
 		var controlor = {};
 		controlor.add = function() {
 			return ForEach(who, function(key, value) {
 				var ret = value;
-				if(CssUnits.Maps[key] && Is(value, "number")) {
+				if(CssUnits.Maps.test(key) && Is(value, "number")) {
 					ret += "px"
 				}
 				return ret
@@ -169,26 +168,18 @@
 		}
 		controlor.remove = function() {
 			return ForEach(who, function(key, value) {
-				return CssUnits.Maps[key] && parseFloat(value) || value
+				if(CssUnits.Maps.test(key)){
+					return parseFloat(value)||0
+				}else {return value}
 				// return /^(\d+(\.\d*)?)[a-zA-Z]*/.test(value) && parseFloat(value) || value
 			})
 		}
 		return controlor
 	}
-	CssUnits.Maps = {
-		"height": 1,
-		"width": 1,
-		"left": 1,
-		"top": 1,
-		"padding": 1,
-		"margin": 1,
-		"borderWidth": 1,
-		"right": 1,
-		"bottom": 1
-	}
+	CssUnits.Maps = /height|width|left|top|padding|margin|right|bottom|radius/i;
 	function CssParser(who) {
 		var prefix = ";";
-		var formated = CssFormat(who);
+		var formated = CssFormat(who, true);
 		var cssArr = ForEach(formated, function(key, value) {
 			if(key=="opacity" && S.IE&&S.IE<9){
 				key = "filter";
@@ -199,13 +190,16 @@
 		return prefix + cssArr.join(";")
 	}
 	// Delete/Add the dashes to change the keys in format "webkitBorderRadius"/"-webkit-border-radius"
-	function CssFormat(who) {
+	function CssFormat(who, add) {
 		var ret = {}
+		add = typeof add !== "undefined" ? add : true;
 		ForEach(who, function(key, value) {
-			if(!/\-/.test(key)){
+			if(add && !/\-/.test(key)){
 				// format "webkitBorderRadius" to "-webkit-border-radius"
 				ret[addDash(key)] = value
 				return value
+			}else{
+				return (ret[key]=value);
 			}
 			ret[removeDash(key)]=value;
 			return value
@@ -246,7 +240,7 @@
 		var cssText = {};
 		for(var k in cssTextArr) {
 			var temp = cssTextArr[k].split(":")
-			temp.length == 2 && (cssText[removeDash(Trim(temp[0]))] = Trim(temp[1]))
+			temp.length == 2 && (cssText[removeDash(Trim(temp[0]).toLowerCase())] = Trim(temp[1]))
 		}
 		var controlor = {};
 		controlor.push = function(who) {

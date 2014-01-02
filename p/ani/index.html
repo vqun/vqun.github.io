@@ -16,7 +16,7 @@
 	<input type="button" id="pause" value="Pause" />
 	<input type="button" id="resume" value="Resume" />
 	<input type="button" id="stop" value="Stop" />
-	<div id="square" style="background-color: #f00;"></div>
+	<div id="square" style="position:absolute;background-color: #f00;border-color:#0f0;border-width:20px;border-style:solid;"></div>
 </body>
 <script type="text/javascript" src="../../saber/utils.js"></script>
 <script type="text/javascript" src="../../saber/animate.js"></script>
@@ -34,7 +34,13 @@
 		aniTest.play({
 			"height": 300,
 			"width": 200,
-			"backgroundColor": "#0f0"
+			"backgroundColor": "#0f0",
+			"borderBottomWidth": 40,
+			"borderColor": "#f00",
+			"borderStyle": "solid",
+			"left": 100,
+			"top": 200,
+			"borderRadius": 50
 		})
 	})
 	Saber.on(pause, "click", function() {

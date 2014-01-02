@@ -1,3 +1,8 @@
+/*
+ * @desc 对于颜色动画，若使用（不管是颜色开始值还是颜色结束值）了rgba，则返回值也使用rgba；
+ *	其他情况都统一转换为rgb形式，因为chrome会默认把颜色值都转换成rgb格式，为统一使然
+ * @log 截止2014.01.02：支持盒尺寸（包括border-radius，暂不支持box-shadow等复杂的样式变换）相关值/位置/颜色/透明度
+ */
 (function(context, undefined) {
 	context = context || {};
 	var is = context.is,
@@ -7,8 +12,6 @@
 		styles = context.styles, // get computed styles
 		cssText = context.cssText,
 		cssUnits = context.cssUnits;
-		// parse the css json to a cssText string and add the units to the styles
-		// cssParser = context.cssParser;
 	var ani = context.ani = {};
 	ani.animate = Animate; // 动画库
 	ani.algorithm = Algorithm() // 动画算法库
@@ -41,6 +44,7 @@
 			var startT = new Date().getTime();
 			var startCssText = cssText(who);
 			var startStyles = cssUnits(styles(who, to)).remove();
+			console.log(JSON.stringify(startStyles))
 			var endStyles = to;
 			var endT = by.duration;
 			by.start(who);
@@ -55,15 +59,14 @@
 				var nowStyles = forEach(to, function(key, value) {
 					var startX = ColorAnalysis(key, startStyles[key]),
 						endX = ColorAnalysis(key, value);
+					var computed = 0;
 					if(is(startX, "array")) {
-						return "#"+forEach(startX, function(k, v) {
-							var newX = Math.floor(Arithmetic.apply(algorithm, [v, 0, endX[k], endT, now])).toString(16);
-							return newX.replace(/(\b\w\b)/, function(m0, m1){
-								return "0"+m1
-							})
-						}).join("")
+						computed = ColorCompute(startX, endX, algorithm, endT, now);
+						return computed
+					}else {
+						computed = Arithmetic.apply(algorithm, [startX, 0, endX, endT, now]);
+						return computed!==0&&isNaN(computed)?value:computed
 					}
-					return Arithmetic.apply(algorithm, [startX, 0, endX, endT, now])
 				});
 				who.style.cssText = startCssText.push(nowStyles).toString();
 				player.playID = setTimeout(arguments.callee, by.frameTime)
@@ -135,27 +138,58 @@
 	}
 	function ColorAnalysis(key, value) {
 		if(key.indexOf("color") !== -1||key.indexOf("Color")!==-1) {
+			var reg = /^(rgb.?\()(\d+),(\d+),(\d+)(?:,(\.?\d+))?(\))/i;
 			if(value.indexOf("rgb")!==-1) {
 				value = clear(value);
 				var temp = value.slice(4, -1).split(",");
-				var ret = forEach(temp, function(k,v){return parseInt(v, 10)});
+				var temp = value.match(reg).slice(1);
+				if(temp.length==6){
+					// if it is a RGB, the fifth element is undefined, just remove it
+					temp.splice(4,1)
+				}
+				var ret = forEach(temp, function(k,v){
+					var r = parseFloat(v, 10);
+					return isNaN(r) ? v : r;
+				})
 				return ret
 			}else{
+				// change the '#f00' or '#ff0000' format to the 'rgb' format
 				var temp = value.slice(1).split("");
+				var ret = ["rgb("];
 				if(temp.length===3){
-					return forEach(temp, function(k,v){
+					var res = forEach(temp, function(k,v){
 						return parseInt(v+v, 16)
-					})
+					});
+					Array.prototype.push.apply(ret, res);
+					ret.push(")");
+					return ret
 				}else{
-					var ret = [];
 					for(var k=0, len=temp.length; k<len;k++){
 						ret.push(parseInt(temp[k]+temp[++k], 16))
 					}
+					ret.push(")");
 					return ret
 				}
 			}
 		}else{
 			return value
 		}
+	}
+	function ColorCompute(start, end, algorithm, endT, now) {
+		if(start[0]=="rgba(") {
+			if(end[0]=="rgb(") {
+				end[0]="rgba(";
+				end.splice(4,0,"1")
+			}
+		}else{
+			if(end[0]=="rgba") {
+				start[0]="rgba(";
+				start.splice(4,0,"1")
+			}
+		}
+		var newV = forEach(start.slice(1, -1), function(key, value) {
+			return Math.floor(Arithmetic.apply(algorithm, [value, 0, end[key+1], endT, now]))
+		}, []);
+		return start[0]+newV.join(",")+start[start.length-1]
 	}
 })(Saber)
