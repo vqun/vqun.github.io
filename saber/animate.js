@@ -2,6 +2,7 @@
  * @desc 对于颜色动画，若使用（不管是颜色开始值还是颜色结束值）了rgba，则返回值也使用rgba；
  *	其他情况都统一转换为rgb形式，因为chrome会默认把颜色值都转换成rgb格式，为统一使然
  * @log 截止2014.01.02：支持盒尺寸（包括border-radius，暂不支持box-shadow等复杂的样式变换）相关值/位置/颜色/透明度
+ * 	不支持red这种英文单词的颜色匹配！
  */
 (function(context, undefined) {
 	context = context || {};
