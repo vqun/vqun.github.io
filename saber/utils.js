@@ -5,6 +5,7 @@
 		ObjToString = Object.prototype.toString;
 	S.All = document.getElementsByTagName("*");
 	S.$ = function(id) {return document.getElementById(id)};
+	S.T = function(tag) {return document.getElementsByTagName(tag)};
 	S.C = function(who, ref) {
 		var re = [];
 		if(!Is(who, 'string')) return re;
