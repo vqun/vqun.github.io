@@ -5,141 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <title>Vqun.github.io by vqun</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <style type="text/css">
-  @font-face {
-    font-family: 'BebasNeueRegular';
-    src: url('./css/font/bebasneue-webfont.eot');
-    src: url('./css/font/bebasneue-webfont.eot?#iefix') format('eot'),
-    url('./css/font/bebasneue-webfont.woff') format('woff'),
-    url('./css/font/bebasneue-webfont.ttf') format('truetype'),
-    url('./css/font/bebasneue-webfont.svg#webfontX0YNjQNl') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  body{
-    font-size: 10px;
-    font-family: 'BebasNeueRegular';
-    background: url(./images/bg/body_bg.jpg) no-repeat 0 0;
-  }
-  header{
-    color: #C2BDB7;
-    font-family: 'BebasNeueRegular';
-    font-size: 40px;
-    line-height: 1em;
-    padding: .6em 1em .6em 1.5em;
-    position: absolute;
-    top: -2.2em;
-    left: 0;
-    background-color: white;
-  }
-  section.menu{
-    width: 80em;
-    height: auto;
-    position: absolute;
-    z-index: 10;
-    top: 30%;
-    left: 50%;
-    margin-left: -40em;
-  }
-  .clear{
-    clear:both;
-  }
-  nav{
-    float:left;
-    background-color: rgba(235,44,6,0.8);
-    width:100%;
-  }
-  .nav, aside ul{
-    margin: 0;
-    padding: 0;
-    float:left;
-  }
-  .nav{
-    margin-right: 16em;
-    padding-left: 3em;
-  }
-  .nav li, aside ul li{
-    float: left;
-    list-style: none;
-    padding: 3em 0 3em 3em;
-  }
-  aside ul li {
-    padding: 1em 0 1em 1em;
-  }
-  .nav li a, aside ul li a{
-    letter-spacing: 1px;
-    color: #e1dcd6;
-    font-size: 25px;
-    text-transform: uppercase;
-    display: inline-block;
-    text-decoration: none;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.75);
-  }
-  .nav li a.active, .nav li a:hover{
-    color: white;
-    transition: color .2s linear;
-    -webkit-transition: color .2s linear;
-    text-shadow: none;
-  }
-  aside ul li a{
-    opacity: 0.6;
-    color: #eb2828
-  }
-  aside ul li a:hover{
-    opacity: 1;
-    -webkit-transition: opacity .5s linear;
-    text-shadow: 0 1px 4px rgba(255,255,255,1);
-  }
-  aside{
-    padding-left: 1em;
-    float:right;
-    background: #fff;
-    margin-left: -16em;
-    margin-top: 2.5em;
-  }
-  aside ul li:last-child a{padding-right:1em;}
-  aside ul li a{
-    font-size: 15px;
-  }
-  .slider_bg{
-    width:100%;
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-    overflow: hidden;
-    top:0;
-    left:0;
-  }
-  .slider_bg ul{
-    width: 10000px;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-  }
-  .slider_bg ul li{
-    width: 100%;
-    height: 100%;
-    position: relative;
-    padding: 0;
-    margin: 0;
-    float:left;
-  }
-  .slider_bg ul li img{
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  </style>
+  <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
   <div style="background-color:#ef5638;width:100%;height:5px;position:fixed;top:0;left:0;z-index:1000"></div>
-  <section class="menu">
-    <header>VQUN</header>
+  <section class="menu" style="opacity:0" id="menu">
+    <header><a href="./index.html?ref=vqun">VQUN</a></header>
     <nav>
-      <ul class="nav">
-        <li><a href="#" class="active">HOME</a></li>
-        <li><a href="#">ABOUT</a></li>
-        <li><a href="#">PROJECTS</a></li>
+      <ul class="nav" id="menuWrap">
+        <li><a href="#" data-action="modAct">HOME</a></li>
+        <li><a href="#" data-action="modAct">ABOUT</a></li>
+        <li><a href="#" data-action="modAct">PROJECTS</a></li>
       </ul>
       <br class="clear" />
     </nav>
@@ -152,11 +28,38 @@
     </aside>
   </section>
 
-  <!-- <section style="font-size:15px;position:absolute;z-index:99;display:block;width:54.4em;height:20em;overflow-y:scroll;left:50%;margin-left:-27.2em;bottom:10em;background-color:#fff;">
-    <article>
-      <p>ABOUT</p>
-    </article>
-  </section> -->
+  <section class="content" style="display:none;height:0;" id="content">
+    <div ref="home" style="display:none;">
+      <article>
+        <h1>欢迎</h1>
+        <p>这是vQun的博客。所有此站下的都是由本人的前端技术之结晶。</p>
+      </article>
+      <article>
+        <h1>Welcome</h1>
+        <p>This is vQun's blog. It is produced all by myself with my own font-end tech.</p>
+      </article>
+    </div>
+    <div ref="about" style="display:none;">
+      <article>
+        <h1>关于</h1>
+        <p>博客用名vQun</p>
+      </article>
+      <article>
+        <h1>About</h1>
+        <p>Use vQun as my blog name.</p>
+      </article>
+    </div>
+    <div ref="projects" style="display:none;">
+      <article>
+        <h1>项目</h1>
+        <p>有简单，有趣，有意义的东西，充满个人想法。</p>
+      </article>
+      <article>
+        <h1>Projects</h1>
+        <p>Many easy examples with fun and meaning, and fill all my own spirit.</p>
+      </article>
+    </div>
+  </section>
   <div class="slider_bg" onselectstart="return false" oncopy="return false" oncut="return false" oncontextmenu="return false">
     <ul id="sliderBg">
       <li><img src="./images/bg/slider_bg_1.jpg" alt=""></li>
@@ -167,4 +70,92 @@
     </ul>
   </div>
 </body>
+<script type="text/javascript" src="./saber/utils.js"></script>
+<script type="text/javascript" src="./saber/animate.js"></script>
+<script type="text/javascript">
+  (function($){
+    var menuEl = $.id("menu"),
+        menuWrapEl = $.id("menuWrap"),
+        menuList = $.T("a", menuWrapEl);
+    var contentEl = $.id("content"),
+        contentList = $.T("div", contentEl),
+        currentContentEl = $.C("currC", contentEl)[0] || null;
+    var activedEl = $.C("active", menuEl)[0] || null;
+    var actions = {
+      init: function() {
+        var menuAni = $.ani.animate(menuEl, {
+          end: function(el) {
+            menuAni = null;
+          },
+          duration: 1000
+        });
+        menuAni.finish({
+          "opacity": 1
+        })
+      },
+      modAct: function(e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        if(target.data && target.data["action"] == "modAct" || target.getAttribute("data-action") == "modAct") {
+          var menuAni = $.ani.animate(menuEl, {
+            duration:300,
+            end: function(ref) {
+              if(activedEl){
+                activedEl.className = "";
+              }
+              target.className = "active";
+              activedEl = target;
+              actions.modContentShow(ref, $.indexOf(target, menuList));
+              menuAni = null;
+            }
+          }, "spring2");
+          menuAni.finish({
+            "top": 100
+          });
+        }
+      },
+      modContentShow: function(ref, index) {
+        var refTop = parseInt($.style(ref, "top"), 10);
+        $.style(contentEl, "top", refTop+"px");
+        if(currentContentEl) {
+          var contentAni = $.ani.animate(contentEl, {
+            end: function(el){
+              contentAni = null;
+              $.style(currentContentEl, "display", "none");
+              currentContentEl = contentList[index];
+              currentContentEl.style.display = "";
+              var contentAniShow = $.ani.animate(contentEl, {
+                end: function() {
+                  contentAniShow = null;
+                }
+              });
+              contentAniShow.finish({
+                "height": 340,
+                "display": ""
+              })
+            }
+          });
+          contentAni.finish({
+            "height": 0
+          });
+          return true
+        }
+        currentContentEl = contentList[index];
+        currentContentEl.style.display = "";
+        var contentAni = $.ani.animate(contentEl, {
+          end: function(el){
+            $.first(menuEl).className = "headerRotate";
+            contentAni = null;
+          }
+        });
+        contentAni.finish({
+          "height": 340,
+          "display": ""
+        })
+      }
+    }
+    actions.init();
+    $.on(menuEl, "click", actions.modAct);
+  })(Saber)
+</script>
 </html>

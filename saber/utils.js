@@ -5,7 +5,8 @@
 		ObjToString = Object.prototype.toString;
 	S.All = document.getElementsByTagName("*");
 	S.$ = function(id) {return document.getElementById(id)};
-	S.T = function(tag) {return document.getElementsByTagName(tag)};
+	S.id = S.$;
+	S.T = function(tag, ref) {ref = ref || document;return ref.getElementsByTagName(tag)};
 	S.C = function(who, ref) {
 		var re = [];
 		if(!Is(who, 'string')) return re;
@@ -28,6 +29,7 @@
 	};
 	S.IE = +navigator.userAgent.replace(/.*?MSIE\s+(\d+\.\d*).*/, "$1")||0;
 	S.trim = Trim;
+	S.indexOf = IndexOf;
 	S.style = Style;
 	S.styles = Styles;
 	// add the units to the styles
@@ -49,6 +51,14 @@
 		return ForEach(src, function(key, value) {
 			return obj[key]||value
 		})
+	}
+	function IndexOf(target, list) {
+		if(Is(list, "array")&&list.indexOf) {
+			return list.indexOf(target)
+		}
+		for(var k=0,len=list.length;k<len;k++) {
+			if(target === list[k]) return k
+		}
 	}
 	function ForEach(who, handler, type) {
 		if(Is(who, "array")){

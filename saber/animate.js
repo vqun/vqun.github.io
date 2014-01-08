@@ -16,7 +16,7 @@
 	var ani = context.ani = {};
 	ani.animate = Animate; // 动画库
 	ani.algorithm = Algorithm() // 动画算法库
-	function Animate(who, as, by) {
+	function Animate(who, by, as) {
 		if(!is(who, "Node")) {
 			throw "Need a Node as the first argument"
 		}
@@ -45,7 +45,6 @@
 			var startT = new Date().getTime();
 			var startCssText = cssText(who);
 			var startStyles = cssUnits(styles(who, to)).remove();
-			console.log(JSON.stringify(startStyles))
 			var endStyles = to;
 			var endT = by.duration;
 			by.start(who);
@@ -53,8 +52,7 @@
 				now = new Date().getTime() - startT;
 				if(now>=endT) {
 					who.style.cssText = startCssText.push(endStyles).toString();
-					controlor.stop();
-					by.end(who);
+					by.end.call(controlor, who);
 					return true;
 				}
 				var nowStyles = forEach(to, function(key, value) {
@@ -79,7 +77,7 @@
 			}
 			var oldEnd = by.end;
 			by.end = function(who) {
-				by.end(who);
+				oldEnd(who);
 				this.stop();
 			}
 			this.play(to)
