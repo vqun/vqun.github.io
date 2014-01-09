@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+</head>
+<body>
+	<ul id="test"></ul>
+</body>
+<script type="text/javascript">
+	function F(num) {
+		var ul = document.getElementById("test");
+		var fragment = document.createDocumentFragment();
+		var tempLi = null;
+		for(var k = 0;k< num;){
+			tempLi = document.createElement("li");
+			tempLi.innerText = ++k;
+			fragment.appendChild(tempLi);
+		}
+		ul.appendChild(fragment);
+		tempLi = null;
+		fragment = null;
+		var tid = setTimeout(function() {
+			clearTimeout(tid);
+			var lis = ul.getElementsByTagName("li"),
+			len = lis.length;
+			for(var k = 1;k <= len; k++){
+				ul.appendChild(lis[len-k]);
+			}
+			lis = null;
+		}, 1000);
+	}
+	F(100);
+</script>
+</html>
