@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test2</title>
+</head>
+<body>
+	<div style="width:100px;height:100px;position:absolute;margin:0;top:0;left:0;background-color:#f00;" id="test"></div>
+</body>
+<script type="text/javascript">
+	var div = document.getElementById("test");
+	var evt = {
+		on: function(el, type, handler) {
+			return evt.evtAccess(el, type, handler)
+		},
+		off: function(el, type, handler) {
+			return evt.evtAccess(el, type, handler, 1)
+		},
+		evtAccess: function(el, type, handler, off) {
+			if(!el || el.nodeType!==1 || !type || Object.prototype.toString.call(handler).slice(8, -1)!=="Function") {
+				return false
+			}
+			var action = (!off && 'addEventListener') || 'removeEventListener';
+			try{
+				el[action](type, handler, true);
+			}catch(e1) {
+				try {
+					action = !off && 'attachEvent' || 'detachEvent';
+					el[action]('on'+type, handler);
+				}catch(e2) {
+					el['on'+type] = handler;
+				}
+			}
+		}
+	};
+	var dragInfo = {};
+	var actions = {
+		dragStart: function(e) {
+			e = e || window.event;
+			dragInfo.dragger = e.target || e.srcElement;
+			dragInfo.x = e.clientX;
+			dragInfo.y = e.clientY;
+			var pos = Pos(dragInfo.dragger);
+			dragInfo.t = pos.t;
+			dragInfo.l = pos.l;
+
+			var winSize = Size(),
+				divSize = Size(div);
+			dragInfo.maxTop = winSize.h - divSize.h;
+			dragInfo.maxLeft = winSize.w - divSize.w;
+			evt.on(div, "mousemove", actions.dragging);
+		},
+		dragging: function(e){
+			e = e || window.event;
+			var deltaX = e.clientX - dragInfo.x,
+				deltaY = e.clientY - dragInfo.y;
+			var top = dragInfo.t + deltaY,
+				left = dragInfo.l + deltaX;
+			if(top < 0) {
+				top = 0
+			}
+			if(top > dragInfo.maxTop) {
+				top = dragInfo.maxTop
+			}
+			if(left < 0) {
+				left = 0
+			}
+			if(left > dragInfo.maxLeft) {
+				left = dragInfo.maxLeft
+			}
+			dragInfo.dragger.style.top = top + "px";
+			dragInfo.dragger.style.left = left + "px";
+		},
+		dragEnd: function(e) {
+			evt.off(div, "mousemove", actions.dragging);
+		}
+	}
+	evt.on(div, "mousedown", actions.dragStart);
+	evt.on(div, "mouseup", actions.dragEnd);
+
+	evt.on(div, "mouseout", actions.dragEnd);
+
+
+	function Pos(who) {
+		if(!who || who.nodeType!==1) {
+			return {
+				t:0,
+				l:0
+			}
+		}
+		var computed = who.currentStyle || (document.defaultView && document.defaultView.getComputedStyle(who, null));
+		return {
+			t: parseInt(computed["top"])||0,
+			l: parseInt(computed["left"])||0
+		}
+	}
+	function Size(who) {
+		if(!who || who.nodeType!==1) {
+			var ow = document.documentElement.offsetWidth || document.body.offsetWidth,
+				oh = document.documentElement.offsetHeight || document.body.offsetHeight;
+			var cw = document.documentElement.clientWidth || document.body.clientWidth,
+				ch = document.documentElement.clientHeight || document.body.clientHeight
+			return {
+				w: Math.max(ow, cw),
+				h: Math.max(oh, ch)
+			}
+		}
+		var computed = who.currentStyle || (document.defaultView && document.defaultView.getComputedStyle(who, null));
+		return {
+			w: parseInt(computed["width"]) || who.offsetWidth,
+			h: parseInt(computed["height"]) || who.offsetHeight
+		}
+	}
+</script>
+</html>
