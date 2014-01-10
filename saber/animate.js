@@ -18,7 +18,7 @@
 	ani.algorithm = Algorithm() // 动画算法库
 	function Animate(who, by, as) {
 		if(!is(who, "Node")) {
-			throw "Need a Node as the first argument"
+			throw "Animate Need a Node as the first argument"
 		}
 		as = is(as, "string") && as || "linear";
 		by = parseParam({

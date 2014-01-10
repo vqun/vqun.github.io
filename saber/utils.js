@@ -1,12 +1,35 @@
 (function(global, undefined) {
-	global.Saber = global.S = {};
+	global.Saber = global.saber = global.S = {};
 	var S = global.Saber;
 	var ArraySlice = Array.prototype.slice,
 		ObjToString = Object.prototype.toString;
 	S.All = document.getElementsByTagName("*");
 	S.$ = function(id) {return document.getElementById(id)};
 	S.id = S.$;
-	S.T = function(tag, ref) {ref = ref || document;return ref.getElementsByTagName(tag)};
+	S.T = function(tag, ref) {ref = ref || document;return ArraySlice.call(ref.getElementsByTagName(tag))};
+	S.define = define;
+	function define(ns, fn) {
+		if(typeof ns !== 'string') {
+			return false;
+		}
+		ns = ns.split('.');
+		var step = S;
+		var f = null;
+		while(f = ns.shift()) {
+			if(ns.length) {
+				if(step[f] === undefined) {
+					step[f] = {};
+				}
+				step = step[f];
+			}else {
+				if(step[f]  === undefined) {
+					step[f] = fn.call(S, S);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	S.C = function(who, ref) {
 		var re = [];
 		if(!Is(who, 'string')) return re;
@@ -187,7 +210,7 @@
 		}
 		return controlor
 	}
-	CssUnits.Maps = /height|width|left|top|padding|margin|right|bottom|radius/i;
+	CssUnits.Maps = /fontSize|height|width|left|top|padding|margin|right|bottom|radius/i;
 	function CssParser(who) {
 		var prefix = ";";
 		var formated = CssFormat(who, true);

@@ -124,7 +124,7 @@ aside ul li a:hover{
   height: 100%;
   padding: 0;
   margin: 0;
-  background: url(../images/bg/body_bg.png) no-repeat 0 0;
+  background: url(../images/bg/body_bg.png) repeat 0 0;
 }
 .slider_bg ul li{
   width: 100%;
