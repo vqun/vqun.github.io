@@ -38,23 +38,25 @@ Saber.define("plugins.tagCloud", function($) {
 			}
 			var tagAniOpts = [];
 			var Floor = Math.floor, Sin = Math.sin, Cos = Math.cos, Pi = Math.PI;
+			var max = opts.data.length;
 			var tags = $.forEach(opts.data, function(i, d) {
-				var direction = Pi*(Random(0, 360)/180), distance = Random(0, opts.radius);
+				var phi = Math.acos(-1+(2*i-1)/max),theta = Math.sqrt(max*Pi)*phi;
+				var distance = opts.radius;
 				tagAniOpts.push({
-					"top": opts.radius+Floor(distance*Cos(direction)),
-					"left": opts.radius+Floor(distance*Sin(direction)),
-					"opacity": Random(0.5,1),
-					"fontSize": Random(13, Math.max(opts.radius/10, 13))
+					"top": opts.radius+Floor(distance*Cos(theta)*Sin(phi)),
+					"left": opts.radius+Floor(distance*Sin(theta)*Sin(phi)),
+					"opacity": Math.abs(Cos(phi)),
+					"fontSize": Random(10, Math.max(opts.radius/13, 13))
 				});
 				return template(d, TPL)
 			});
-			container.innerHTML = "<ul class=\"tc-tagsOutter\">"+tags.join("")+"</ul>";
+			container.innerHTML = "<ul class=\"tc-tagsOuter\">"+tags.join("")+"</ul>";
 			var tagEls = $.T("li", container);
 			var maxTime = 150*tagEls.length;
 			info.anis = $.forEach(tagEls, function(k, tag) {
 				var aniOpts = tagAniOpts[k];
 				var tempAni = $.ani.animate(tag, {
-					"duration": Random(300, maxTime)
+					"duration": Random(1000, 300)
 				});
 				tempAni.play(aniOpts);
 				return tempAni

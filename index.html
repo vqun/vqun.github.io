@@ -54,11 +54,13 @@
       <article>
         <h1>项目</h1>
         <p>有简单，有趣，有意义的东西，充满个人想法。</p>
-        <p><button value="TagCloudTest" id="TagCloudTest">TagCloudTest</button></p>
       </article>
       <article>
         <h1>Projects</h1>
         <p>Many easy examples with fun and meaning, and fill all my own spirit.</p>
+      </article>
+      <article style="position: absolute;top: 90px;left: 50%;margin-left: -160px;overflow: hidden;height: 300px;width: 300px;">
+        <iframe src="./p/third/tagCloud/index.html" frameborder="0" width="300" height="300" style="position:absolute;top:50%;left:50%;margin-top:-150px;margin-left:-150px;z-index:10000;"></iframe>
       </article>
     </div>
   </section>
@@ -98,6 +100,7 @@
       modAct: function(e) {
         e = e || window.event;
         var target = e.target || e.srcElement;
+        if(activedEl == target) return false;
         if(target.data && target.data["action"] == "modAct" || target.getAttribute("data-action") == "modAct") {
           var menuAni = $.ani.animate(menuEl, {
             duration:300,
@@ -132,7 +135,7 @@
                 }
               });
               contentAniShow.finish({
-                "height": 340,
+                "height": 400,
                 "display": ""
               })
             }
@@ -151,66 +154,13 @@
           }
         });
         contentAni.finish({
-          "height": 340,
+          "height": 400,
           "display": ""
         })
       }
     }
     actions.init();
     $.on(menuEl, "click", actions.modAct);
-  })(Saber)
-</script>
-<script type="text/javascript" src="./js/plugins/tagCloud.js"></script>
-<script type="text/javascript">
-  (function($){
-    var btn = $.id("TagCloudTest");
-    var tagCloud = null;
-    $.on(btn, "click", function(e) {
-      tagCloud = $.plugins.tagCloud({
-        "data": [{
-          "url": "http://www.sina.com.cn",
-          "tag": "Sina"
-        },{
-          "url": "http://www.baidu.com",
-          "tag": "Baidu"
-        },{
-          "url": "http://weibo.com",
-          "tag": "Weibo"
-        },{
-          "url": "http://www.sina.com.cn",
-          "tag": "Sina"
-        },{
-          "url": "http://www.baidu.com",
-          "tag": "Baidu"
-        },{
-          "url": "http://www.sina.com.cn",
-          "tag": "Sina"
-        },{
-          "url": "http://www.baidu.com",
-          "tag": "Baidu"
-        },{
-          "url": "http://weibo.com",
-          "tag": "Weibo"
-        },{
-          "url": "http://www.sina.com.cn",
-          "tag": "Sina"
-        },{
-          "url": "http://www.baidu.com",
-          "tag": "Baidu"
-        },{
-          "url": "http://www.sina.com.cn",
-          "tag": "Sina"
-        },{
-          "url": "http://www.baidu.com",
-          "tag": "Baidu"
-        },{
-          "url": "http://weibo.com",
-          "tag": "Weibo"
-        }]
-      });
-      tagCloud.spread();
-      btn.disabled = true;
-    })
   })(Saber)
 </script>
 </html>
