@@ -86,6 +86,7 @@
         currentContentEl = $.C("currC", contentEl)[0] || null;
     var activedEl = $.C("active", menuEl)[0] || null;
     var actions = {
+      lock: false,
       init: function() {
         var menuAni = $.ani.animate(menuEl, {
           end: function(el) {
@@ -98,9 +99,11 @@
         })
       },
       modAct: function(e) {
+        if(actions.lock) return false;
         e = e || window.event;
         var target = e.target || e.srcElement;
         if(activedEl == target) return false;
+        actions.lock = true;
         if(target.data && target.data["action"] == "modAct" || target.getAttribute("data-action") == "modAct") {
           var menuAni = $.ani.animate(menuEl, {
             duration:300,
@@ -132,6 +135,7 @@
               var contentAniShow = $.ani.animate(contentEl, {
                 end: function() {
                   contentAniShow = null;
+                  actions.lock = false;
                 }
               });
               contentAniShow.finish({
@@ -151,6 +155,7 @@
           end: function(el){
             $.first(menuEl).className = "headerRotate";
             contentAni = null;
+            actions.lock = false;
           }
         });
         contentAni.finish({
