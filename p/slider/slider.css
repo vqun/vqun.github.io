@@ -13,7 +13,7 @@ a{
 	box-shadow: 3px 3px #DD7E16;
 	border-radius: 5px;
 }
-div{
+div#slide_outer_1{
 	width:350px;
 	height: 60px;
 	margin: 0 auto;
@@ -31,7 +31,7 @@ ul{
 	margin: 0;
 	padding: 0;
 }
-li{
+#slide_1 li{
 	list-style: none;
 	float: left;
 	height: 60px;

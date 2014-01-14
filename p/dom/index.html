@@ -3,9 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test</title>
+	<link rel="stylesheet" type="text/css" href="../../css/thinking.css">
 </head>
 <body>
-	<ul id="test"></ul>
+	<h1>动态生成dom（非innerHTML），3秒后倒序</h1>
+	<ul id="test" style="position:absolute;top:50px;left:20px;"></ul>
+	<div class="thinking">
+		<h2>基本思路</h2>
+		<ol>
+			<li>使用fragment生成</li>
+			<li>使用appendChild逐个把元素倒序</li>
+			<li>其他：实际上使用appendChild并不是什么很好的方式，因为每次都会重渲染DOM树</li>
+			<li>另外：这是一道面试题</li>
+		</ol>
+	</div>
 </body>
 <script type="text/javascript">
 	function F(num) {
@@ -28,8 +39,8 @@
 				ul.appendChild(lis[len-k]);
 			}
 			lis = null;
-		}, 1000);
+		}, 3000);
 	}
-	F(100);
+	F(50);
 </script>
 </html>

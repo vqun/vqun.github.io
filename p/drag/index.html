@@ -3,9 +3,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test2</title>
+	<link rel="stylesheet" type="text/css" href="../../css/thinking.css">
 </head>
 <body>
 	<div style="width:100px;height:100px;position:absolute;margin:0;top:0;left:0;background-color:#f00;" id="test"></div>
+
+	<div class="thinking">
+		<h2>基本思路</h2>
+		<ol>
+			<li>mousedown：记录开始拖，并且存储各种初始化数据，如谁被拖，鼠标位置，被拖元素的left、top，以及计算出拖拽的范围（通过视窗大小和元素大小计算）</li>
+			<li>初始数据计算完，添加mousemove事件处理<em>！！！</em></li>
+			<li>mousemove：获取新的鼠标位置，与初始位置得到偏移位置，计算出元素的新位置；当然，别忘了做<em>拖拽范围的判断</em></li>
+			<li>mouseup：拖拽结束，<em>干掉mousemove事件</em></li>
+			<li>其他：比如，mousemove要放在谁身上，要不要加个setTimoue啊神马的blablabla。。。就不纠结.......<em>PO主真的很懒，没办法</em></li>
+		</ol>
+	</div>
 </body>
 <script type="text/javascript">
 	var div = document.getElementById("test");
@@ -48,7 +60,7 @@
 				divSize = Size(div);
 			dragInfo.maxTop = winSize.h - divSize.h;
 			dragInfo.maxLeft = winSize.w - divSize.w;
-			evt.on(div, "mousemove", actions.dragging);
+			evt.on(document.body, "mousemove", actions.dragging);
 		},
 		dragging: function(e){
 			e = e || window.event;
@@ -72,13 +84,13 @@
 			dragInfo.dragger.style.left = left + "px";
 		},
 		dragEnd: function(e) {
-			evt.off(div, "mousemove", actions.dragging);
+			evt.off(document.body, "mousemove", actions.dragging);
 		}
 	}
 	evt.on(div, "mousedown", actions.dragStart);
 	evt.on(div, "mouseup", actions.dragEnd);
 
-	evt.on(div, "mouseout", actions.dragEnd);
+	evt.on(document, "mouseout", actions.dragEnd);
 
 
 	function Pos(who) {

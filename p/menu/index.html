@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Menu</title>
 	<link rel="stylesheet" href="./menu.css">
+	<link rel="stylesheet" type="text/css" href="../../css/thinking.css">
 </head>
 <body>
 <div class="section">
@@ -32,6 +33,18 @@
 			<br class="clear" />
 		</ul>
 	</div>
+</div>
+
+<div class="thinking">
+	<h2>基本思路</h2>
+	<ol>
+		<li>搞两个定时器clearTimeout，一个用来记录显示二级菜单showTid，一个用来记录隐藏二级菜单hideTid</li>
+		<li>搞个currShow记录当前显示的二级菜单</li>
+		<li>mouseover：clearTimeout(hideTid)，干掉隐藏</li>
+		<li>拿到被over元素对应的二级菜单，判断是否是当前显示的currShow，然后，，，，你懂的。。</li>
+		<li>mouseout：clearTimeout(showTid)，干掉显示</li>
+		<li>其他：比如，干掉显示时要做blablabla。。。都忒么是浮云了，就不纠结.......<em>PO主真的很懒，没办法</em></li>
+	</ol>
 </div>
 </body>
 <script type="text/javascript" src="../../saber/utils.js"></script>

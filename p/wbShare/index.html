@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Weibo Share</title>
+	<link rel="stylesheet" type="text/css" href="../../css/thinking.css">
+	<style type="text/css">
+	p{
+		width:20em;
+		margin:0 auto;
+		border:1px solid red;
+		padding:10px;
+		box-shadow: 2px 2px 5px #f99;
+	}
+	</style>
+</head>
+<body>
+	<p id="text">韩寒：初中时开始有文章发表，并作为体育特长生升入上海市松江二中。高一时（1999年），以《杯中窥人》一文获得首届新概念作文大赛一等奖，后因期末考试七科不及格而留级，被报道后引发社会关于素质教育政策及“学校应当培养全才还是专才”等系列教育问题的激烈讨论。他发表的首部小说是一部反映上海初三学生生活的小说《三重门》。通过这部小说的发行，他一举成名。该书累计发行200万册，中国近20年销量最大的文学类作品。</p>
+	<div id="shareBtn" style="display:none;position:absolute;left:50%;top:0;"><a href="#" target="_blank"><img src="../../images/p/wbShare/share.gif" /></a></div>
+
+	<div class="thinking">
+		<h2>基本思路</h2>
+		<ol>
+			<li>DOM标准浏览器：使用<em>var selection = window.getSelection()</em></li>
+			<li>IE：使用<em>var selection = document.selection.createRange()</em></li>
+			<li>selection：两种方式得到的selection都是Range（范围）对象（或Range子类对象）</li>
+			<li>获取选择的文本内容：DOM标准调用toString()，IE下直接通过text属性，即：<em>selection.toString() | selection.text</em></li>
+			<li>其他：都忒么是浮云了，包括有一点奇怪的bug，就不纠结</li>
+			<li>关于Range：截止2014年01月14日，<em>PO主很懒</em>，还没写关于此东西，有机会再说吧。</li>
+		</ol>
+	</div>
+</body>
+<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript">
+(function($, window) {
+	var text = $.id("text"), shareBtn = $.id("shareBtn"),
+		shareA = $.T("a", shareBtn)[0];
+	var shareText = "";
+	function selectText() {
+		if(document.selection) {
+			return document.selection.createRange().text
+		}else {
+			return window.getSelection().toString()
+		}
+	}
+	$.on(document.body, "mouseup", function(evt) {
+		evt = evt || window.event;
+		var l = evt.clientX + 5,
+			t = evt.clientY + 5;
+		shareText = selectText();
+		if(shareText.length > 10) {
+			shareBtn.style.top = t + "px";
+			shareBtn.style.left = l + "px";
+			shareBtn.style.display = "";
+		}else {
+			shareBtn.style.display = "none";
+		}
+	});
+	$.on(document, "click", function(evt) {
+		evt = evt || window.event;
+		var target = evt.target || evt.srcElement;
+		if(target === text) {
+			return false;
+		}
+		shareBtn.style.display = "none"
+	});
+	$.on(shareBtn, "click", function(evt) {
+		evt = evt || window.event;
+		if(shareText.length>10) {
+			shareA.href = "http://service.weibo.com/share/share.php?url="+encodeURIComponent("http://vqun.github.io")+"&title="+shareText;
+		}
+	})
+})(Saber, window);
+</script>
+</html>
