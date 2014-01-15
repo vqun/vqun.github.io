@@ -41,7 +41,8 @@
 			<li>搜索框：只做了focus和blur事件处理，focus时，IE8及以下默认文字消息，其他浏览器使用placeholder；blur时，做输入值的trim处理，若为空串，还原为默认值，否则保持trim后的值</li>
 			<li>邀请回答/收回邀请功能：用事件代理实现，事件绑定在父级；通过自定义属性<em>data-action</em>和<em>data-info</em>来分别确定<em>是否在处理邀请</em>和<em>邀请类型（邀请/回收）</em></li>
 			<li>邀请变换为收回时，使用了CSS3的animation特性做渐进增强</li>
-			<li>其他：<em>IE6及以上（IE7、IE8使用IE11下的开发者工具测）、Chrome、Firefox等均可正常使用，但是，不保证各浏览器长得完全一样</em>；P.S.原数据中有一个图片地址http://octodex.github.com/images/FIRSTocat错误，修改为http://octodex.github.com/images/Robotocat.png（在官网http://octodex.github.com找的）</li>
+			<li>测试环境：<em>IE6及以上、Chrome、Firefox等均可正常使用，但是，不保证各浏览器长得完全一样</em>；其中，IE7、IE8等使用IE11下的开发者工具测试，IE6在Win7的XP Mode下测试</li>
+			<li>其他：原数据中有一个图片地址http://octodex.github.com/images/FIRSTocat错误，修改为http://octodex.github.com/images/Robotocat.png（在官网http://octodex.github.com找的）</li>
 		</ol>
 	</div>
 </body>
