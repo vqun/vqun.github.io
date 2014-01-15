@@ -148,6 +148,9 @@
 		return dataArr
 	}
 	function inserHTML(node, html, where){
+		if(!is(node, "node")) {
+			return false;
+		}
 		node = node && node.nodeType == 1 ? node : document.body;
 		where = where? where.toLowerCase(): "beforeend";
 		if (node.insertAdjacentHTML) {
@@ -189,7 +192,6 @@
 					node.parentNode.insertBefore(frag, node.nextSibling);
 					return node.nextSibling;
 			}
-			throw 'Illegal insertion point -> "' + where + '"';
 		}
 	};
 	function trim(str) {
