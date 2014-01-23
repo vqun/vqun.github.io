@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Heap Sort</title>
+	<link rel="stylesheet" type="text/css" href="../../css/thinking.css">
+</head>
+<body>
+<div class="thinking">
+	<h2>堆排序：最大堆排序</h2>
+	<h3><em>P.S.</em> 最小堆: 只需要把maxHeap中的<em>left&gt;root</em>和<em>right&gt;root</em>中的"<em>&gt;</em>"修改为"<em>&lt;</em>"</h3>
+	<pre>
+&lt;script type="text/javascript"&gt;
+    var test = [10, 5, 6, 41, 98, 25, 3, 65, 32,78, 12, 32, 54, 65];
+    alert("最大堆排序：\n"+maxHeapSort(test).join(" > "))
+
+    // maxHeapSort: 最大堆排序
+    function maxHeapSort(arr) {
+        var temp = arr.slice(0);
+        for(var k = 0,len = arr.length; k&lt;len; k++) {
+            temp = buildMaxHeap(temp);
+            arr[k]=temp.shift()
+        }
+        return arr
+    }
+    // buildMaxHeap: 将数组转换为最大堆
+    function buildMaxHeap(arr) {
+        var h = Math.ceil(log(2, arr.length));
+        for(var k = Math.pow(2, h-1)-2; k&gt;=0; k--) {
+            maxHeap(arr, k)
+        }
+        return arr
+    }
+    // maxHeap: 以数组的某节点为根的树转化为最大堆
+    function maxHeap(arr, i) {
+        var l = 2*i+1, r = 2*(i+1);
+        var root = arr[i],
+            left = l&lt;arr.length && arr[l] || null,
+            right = r&lt;arr.length && arr[r] || null;
+        var max = root, maxI = i;
+        if(left != null && left &gt; root) {
+            max = left;
+            maxI = l;
+        }
+        if(right != null && right &gt; max) {
+            max = left;
+            maxI = r;
+        }
+        if(maxI !== i) {
+            exchange(arr, i, maxI);
+            arguments.callee(arr, maxI);
+        }
+    }
+    // exchange: 交换数组的两个元素值
+    function exchange(arr, i, j) {
+        var tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp
+    }
+    // log: 对数函数
+    function log(base, value) {
+        if(base &lt; 1 || value &lt; 0) {
+            return -Infinity
+        }
+        var minus = 1
+        if(base == 2) {
+            minus = Math.LN2
+        }else if(base == 10) {
+            minus = Math.LN10
+        }else {
+            minus = Math.log(base)
+        }
+        return Math.log(value)/minus
+    }
+&lt;/script&gt;
+	</pre>
+</div>
+</body>
+<script type="text/javascript" src="maxHeap.js"></script>
+<script type="text/javascript" src="minHeap.js"></script>
+</html>
