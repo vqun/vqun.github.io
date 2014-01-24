@@ -1,0 +1,58 @@
+.codeHighlight{
+	font-size: 15px;
+	margin: 0;
+	padding: 0 0 1px 0;
+	border: .1em solid #eee;
+	line-height: 1.5em;
+}
+.codeHighlight .keyword{
+	color: rgb(9, 9, 207);
+	font-style: normal;
+	font-weight: bold;
+}
+.codeHighlight .object{
+	color: green;
+	font-style: normal;
+	font-weight: bold;
+}
+.codeHighlight .property{
+	color: pink;
+	font-style: normal;
+	font-weight: bold;
+}
+.codeHighlight .method{
+	color: rgb(255, 143, 0);
+	font-style: normal;
+	font-weight: bold;
+}
+.codeHighlight .arguments{
+	color: rgb(204, 0, 255);
+	font-style: normal;
+	font-weight: bold;
+}
+.codeHighlight .line{
+	cursor: default;
+	padding: .1em 0 .1em .2em;
+	counter-increment: codeLineNum;
+	margin: 0 0 0 2em;
+	list-style: none;
+	position: relative;
+}
+.codeHighlight .line::before{
+	content: counter(codeLineNum);
+	background-color: rgb(250, 247, 247);
+	width: 1.7em;
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	left: -2em;
+	text-align: right;
+	padding: .2em 0.2em .2em 0;
+	border-right: .1em solid #eee;
+}
+.codeHighlight .line:hover{
+	background-color: rgba(244,244,244,.8);
+}
+.codeHighlight pre{
+	margin: 0;
+}

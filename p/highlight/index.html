@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Code Highlighting</title>
+	<link rel="stylesheet" type="text/css" href="../../css/plugins/codeHighlight.css">
+</head>
+<body>
+	<ol class="codeHighlight" id="container">
+	</ol>
+	<textarea id="codeHighlightTest" style="margin-top:20px;height: 40em;width:50em;">
+// 敲敲试试哈。。。代码高亮初期
+var txt = Saber.$("codeHighlightTest");
+var container = Saber.$("container");
+var codes = new Saber.CodeHighlight(txt);
+codes.line().render(container);
+var inputing = 0;
+Saber.on(txt, "keyup", function(evt) {
+	clearTimeout(inputing);
+	inputing = setTimeout(function() {
+		codes.update();
+	}, 100)
+})
+	</textarea>
+</body>
+<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript" src="../../js/plugins/codeHighlight.js"></script>
+<script type="text/javascript">
+	var txt = Saber.$("codeHighlightTest");
+	var container = Saber.$("container");
+	var codes = new Saber.CodeHighlight(txt);
+	codes.line().render(container);
+	var inputing = 0;
+	Saber.on(txt, "keyup", function(evt) {
+		clearTimeout(inputing);
+		inputing = setTimeout(function() {
+			codes.update();
+		}, 100)
+	})
+</script>
+</html>
