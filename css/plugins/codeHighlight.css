@@ -9,6 +9,9 @@
 	font-style: normal;
 	font-weight: bold;
 }
+.codeHighlight .jsComment{
+	color: #aaa;
+}
 .codeHighlight .keyword{
 	color: rgb(9, 9, 207);
 }

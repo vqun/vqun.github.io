@@ -84,7 +84,9 @@ function log(base, value) {
     (function($){
         var codes = $.id("codes");
         var container = $.id("codeContainer");
-        var codes = new Saber.CodeHighlight(codes, 2);
+        var codes = new Saber.CodeHighlight(codes, {
+        	"indent": 2
+        });
         codes.line("<div class=\"line\">${code}</div>").render(container)
     })(Saber)
 </script>

@@ -4,12 +4,46 @@
 	<meta charset="UTF-8">
 	<title>Code Highlighting</title>
 	<link rel="stylesheet" type="text/css" href="../../css/plugins/codeHighlight.css">
+	<style type="text/css">
+	body{
+		overflow-x: auto;
+		padding: 1em;
+	}
+	#codeHighlightTest{
+		height: 30em;
+		width: 27em;
+		float: left;
+		padding: 1em;
+		margin-right: 1em;
+		line-height: 1.5em;
+	}
+	#container_0{
+		float: left;
+		margin-right: 1em;
+		width: 28em;
+	}
+	#container_1{
+		float: left;
+		width: 28em;
+	}
+	</style>
 </head>
 <body>
-	<div style="margin:2em auto;width:65em;">
-		<textarea id="codeHighlightTest" style="height: 35em;width:30em;float:left;padding: 1em;">
+	<div style="width:90em;overflow-x:hidden;">
+		<ol id="container_0"></ol>
+		<textarea id="codeHighlightTest">
 // 敲敲试试哈。。。代码高亮改进
-// P.S. 没有对注释做任何判断，也就是说，注释也会被当作代码处理
+// P.S. 没有对注释过多判断
+/*
+ 左代码使用默认的li作为行
+ 需要给ol或ul作为container
+ 且代码来自中间的textarea
+*/
+/*
+ 右代码使用自定义div作为行
+ 且代码来自script标签
+ IE下不好使，IE将script的内容压成一行了。。
+*/
 var txt = Saber.$("codeHighlightTest");
 var container = Saber.$("container");
 var codes = new Saber.CodeHighlight(txt);
@@ -21,9 +55,9 @@ Saber.on(txt, "keyup", function(evt) {
 		codes.update();
 	}, 100)
 });
-
-// 1. 字符串：黑红
-"Hehe to Death"
+// 1. 字符串：红色
+"Hehe to Death && \"HelloWorld\""
+'Hehe to Death && \'HelloWorld\''
 // 2. 关键字：蓝色
 var str0 = new String();
 // 3. JS方法（定义或调用，不含申明）：黄色
@@ -35,24 +69,31 @@ Saber.on(txt, "keyup", function(evt) {})
 Saber.str.trim();
 Saber.utils.ani.animate()
 		</textarea>
-		<ol class="codeHighlight" id="container" style="float:left;margin-left:2em;width:auto;">
-		</ol>
+		<div id="container_1"></div>
 		<br style="clear:both;" />
 	</div>
 </body>
 <script type="text/javascript" src="../../saber/utils.js"></script>
 <script type="text/javascript" src="../../js/plugins/codeHighlight.js"></script>
-<script type="text/javascript">
-	var txt = Saber.$("codeHighlightTest");
-	var container = Saber.$("container");
-	var codes = new Saber.CodeHighlight(txt);
-	codes.line().render(container);
-	var inputing = 0;
-	Saber.on(txt, "keyup", function(evt) {
-		clearTimeout(inputing);
-		inputing = setTimeout(function() {
-			codes.update();
-		}, 100)
-	})
+<script type="text/javascript" id="test">
+var txt = Saber.$("codeHighlightTest");
+var container_0 = Saber.$("container_0");
+var container_1 = Saber.$("container_1");
+var codes_0 = new Saber.CodeHighlight(txt);
+codes_0.line().render(container_0);
+var codes_1 = new Saber.CodeHighlight(Saber.$("test"), {
+	"container": container_1,
+	"indent": 2,
+	"codeType": "js"
+})
+codes_1.line("<div class=\"line\">${code}</div>").render();
+var inputing = 0;
+Saber.on(txt, "keyup", function(evt) {
+	clearTimeout(inputing);
+	inputing = setTimeout(function() {
+		codes_0.update();
+		codes_1.update();
+	}, 100)
+})
 </script>
 </html>
