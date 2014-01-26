@@ -5,30 +5,27 @@
 	border: .1em solid #eee;
 	line-height: 1.5em;
 }
-.codeHighlight .keyword{
-	color: rgb(9, 9, 207);
+.codeHighlight i{
 	font-style: normal;
 	font-weight: bold;
+}
+.codeHighlight .keyword{
+	color: rgb(9, 9, 207);
+}
+.codeHighlight .string{
+	color: rgb(224, 14, 14);
 }
 .codeHighlight .object{
 	color: green;
-	font-style: normal;
-	font-weight: bold;
 }
 .codeHighlight .property{
-	color: pink;
-	font-style: normal;
-	font-weight: bold;
+	color: rgb(233, 100, 123);
 }
 .codeHighlight .method{
 	color: rgb(255, 143, 0);
-	font-style: normal;
-	font-weight: bold;
 }
 .codeHighlight .arguments{
 	color: rgb(204, 0, 255);
-	font-style: normal;
-	font-weight: bold;
 }
 .codeHighlight .line{
 	cursor: default;
@@ -55,4 +52,7 @@
 }
 .codeHighlight pre{
 	margin: 0;
+	word-break: break-word;
+	word-wrap: break-word;
+	width: 100%;
 }
