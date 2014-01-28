@@ -48,7 +48,7 @@
 	left: -2em;
 	text-align: right;
 	padding: .2em 0.2em .2em 0;
-	border-right: .1em solid #eee;
+	border-right: .15em solid #56F319;
 }
 .codeHighlight .line:hover{
 	background-color: rgba(244,244,244,.8);
