@@ -73,7 +73,7 @@ Saber.utils.ani.animate()
 		<br style="clear:both;" />
 	</div>
 </body>
-<script type="text/javascript" src="../../saber/utils.js"></script>
+<script type="text/javascript" src="../../saber/base.js"></script>
 <script type="text/javascript" src="../../js/plugins/codeHighlight.js"></script>
 <script type="text/javascript" id="test">
 var txt = Saber.$("codeHighlightTest");
@@ -92,7 +92,6 @@ Saber.on(txt, "keyup", function(evt) {
 	clearTimeout(inputing);
 	inputing = setTimeout(function() {
 		codes_0.update();
-		codes_1.update();
 	}, 100)
 })
 </script>
