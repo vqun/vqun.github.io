@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Test</title>
+</head>
+<body>
+	<div id="test"></div>
+</body>
+<script type="text/javascript" src="../../saber/base.js"></script>
+<script type="text/javascript" src="../../saber/http.js"></script>
+<script type="text/javascript">
+	(function($, undefined) {
+		var test = $.id("test")
+		var http = new $.Http()
+		http.request("./httpTest.json", {
+			"success": function(data, xhr) {
+				test.innerHTML = data.html
+			},
+			"fail": function(data, xhr) {
+				console.log(xhr.readyState)
+				console.log(xhr.response)
+				console.log(xhr.status)
+			},
+			"data": {
+				"key": 1,
+				"value": "test"
+			}
+		})
+	})(Saber)
+</script>
+</html>

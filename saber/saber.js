@@ -1,8 +1,8 @@
 (function(global, undefined) {
-	if(global.saber) {
-		return;
+	if(!global.Saber) {
+		global.Saber = {};
 	}
-	var saber = global.saber = {};
+	var Saber = global.Saber;
 	var doc = document;
 	var oldWebKit = +/AppleWebKit\/(\S+)/.exec(navigator.userAgent)[1]<535.23;
 	var regExp = {
@@ -11,7 +11,7 @@
 	};
 	var cachedModules = [];
 	function uri(id) {
-		var ref = saber["config"].path || "";
+		var ref = Saber["config"].path || "";
 		var uri = ref + id;
 		uri = uri.replace(/\/\/+/g, '\/');
 		return uri;
@@ -49,6 +49,5 @@
 		this.id = id;
 		this.uri = uri;
 	};
-	Module.prototype.load = function() {
-	};
+	Module.prototype.load = function() {};
 })(this);
