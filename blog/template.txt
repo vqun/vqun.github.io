@@ -1,9 +1,0 @@
-<div class="article">
-	<div class="title">
-		<h1>$${title}</h1>
-		<p><span>$${time}</span>&nbsp;&nbsp;&nbsp;&nbsp;分类：<a href="#">$${classify}</a></p>
-	</div>
-	<div class="content">$${content}</div>
-</div>
-<div class="aside"><h1>这一块不知道要干嘛！！好纠结</h1></div>
-<br class="clear" />
