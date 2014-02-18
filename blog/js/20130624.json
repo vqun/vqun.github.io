@@ -1,0 +1,20 @@
+{
+	"template": "./template.thtml",
+	"title": "酱油的setTimeout",
+	"time": "2013-06-24",
+	"classify": "Js",
+	"tag": "",
+	"content": [
+		"CONTENT{分享要点：}",
+		"CONTENT{1. W3C对于setTimeout的解释；}",
+		"CONTENT{2. UI线程和UI队列；（UI队列熊CTO说应该叫任务队列比较合适）}",
+		"CONTENT{3. 基于UI线程对setTimeout重新解释；}",
+		"CONTENT{4. 其他，如setTimeout作用域、this及setInterval等。}",
+		"CONTENT{本次分享的缺点：}",
+		"CONTENT{1. UI线程解释中没有把对应的图画出来放PPT上，讲解时不清晰；}",
+		"CONTENT{2. 吐字不清晰，讲得太投入，没有注意和听客们交流；}",
+		"CONTENT{3. 有些地方重复解释，导致听客们听得都累了；}",
+		"CONTENT{4. 其他求补充。}",
+		"CONTENT{详见PPT：（<a href=\"../files/setTimeout.ppt\">下载PPT</a>）}"
+	]
+}

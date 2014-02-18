@@ -33,7 +33,7 @@
 	}, "id");
 	define("dom.id", null, "$");
 	define("dom.tag", function($){
-		return function(tag, ref) {ref = ref || document;return ArraySlice.call(ref.getElementsByTagName(tag))};
+		return function(tag, ref) {ref = ref || document;return ref.getElementsByTagName(tag)};
 	}, "T");
 	define("dom.isNode", function($) {
 		return function(who) {return !!who && who.nodeType===1}

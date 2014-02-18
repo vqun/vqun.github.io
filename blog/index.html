@@ -2,78 +2,29 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>${title}</title>
+	<title></title>
 	<link rel="stylesheet" href="../css/common.css">
   	<link rel="stylesheet" href="../css/top.css">
-	<style type="text/css">
-	body{
-		padding: 0;
-		margin: 0;
-		background: #f1f1f1 url(../images/bg/boby_bg.png) repeat;
-	}
-	.header, .footer{
-		background-color: rgba(235,44,6,0.8);
-		font-family: 'BebasNeueRegular';
-	}
-	.nav li, aside ul li {
-		padding: 1.5em 0 1em 3em;
-	}
-	.main{
-		font-size: 13px;
-		margin: 2em;
-	}
-	.article{
-		background-color: white;
-		border-radius: .5em;
-		padding: 1%;
-		width: 68%;
-		float: left;
-		box-shadow: 1px 1px 10px #D6D3D3
-	}
-	.article .title{
-		text-align: center;
-	}
-	.article .title p{
-		padding-bottom: .5em;
-		border-bottom: 1px solid #dcdcdc;
-	}
-	.aside{
-		float: right;
-		width: 30%;
-	}
-	.content p{
-		line-height: 1.5em;
-		text-indent: 2em;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="../css/blog/blog.css">
 </head>
 <body>
 	<div class="header menu">
+		<a href="./index.html?ref=vqun" class="logo"><img src="../images/logo.jpg" /></a>
 		<ul class="nav" id="menuWrap">
 			<li><a href="/" data-action="modAct">HOME</a></li>
 			<li><a href="#" data-action="modAct">ABOUT</a></li>
+			<li><a href="#" data-action="modAct">BLOG</a></li>
 			<li><a href="#" data-action="modAct">PROJECTS</a></li>
 		</ul>
 		<br class="clear" />
 	</div>
-	<div class="main" id="main-panel">
-		<div class="article">
-			<div class="title">
-				<h2>HTML5平台：在前进的路上</h2>
-				<p><span>2014-02-12</span>&nbsp;&nbsp;&nbsp;&nbsp;分类：<a href="#">未分类</a></p>
-			</div>
-			<div class="content">
-				<p>尽管将Android视为目标平台的开发者人数有着显著地增加，但是当提到首要平台时，大多开发者的选择依旧是iOS。相比移动平台届的两位老大哥，HTML5虽还没有达到和他们一样的成就，不过也有着不错的发展。</p>
-				<p>在美国和欧洲市场，iOS和Android对移动开发者的吸引力，不是其他平台能够比拟的。不过在剩余的其他市场中，开发者所青睐的却是HTML5。根据VisionMobile的调查，在南亚、南美以及中东和非洲市场，HTML5是继Android之后最受欢迎的平台，而iOS则排名第三。</p>
-			</div>
-		</div>
-		<div class="aside">边栏</div>
-		<br class="clear" />
-	</div>
+	<div class="main" id="main-panel"></div>
 	<div class="footer menu">
+		<a href="./index.html?ref=vqun" class="logo"><img src="../images/logo.jpg" /></a>
 		<ul class="nav" id="menuWrap">
 			<li><a href="/" data-action="modAct">HOME</a></li>
 			<li><a href="#" data-action="modAct">ABOUT</a></li>
+			<li><a href="#" data-action="modAct">BLOG</a></li>
 			<li><a href="#" data-action="modAct">PROJECTS</a></li>
 		</ul>
 		<br class="clear" />
@@ -81,42 +32,5 @@
 </body>
 <script type="text/javascript" src="../saber/base.js"></script>
 <script type="text/javascript" src="../saber/http.js"></script>
-<script type="text/javascript">
-(function($, undefined) {
-	var main = $.id("main-panel");
-	var http = new $.Http();
-	http.request("./hello.json", {
-		"success": function(data, xhr) {
-			var tpl = data.template;
-			var tplInter = new $.Http();
-			tplInter.request(tpl, {
-				"success": function(_tpl, xhr) {
-					var c = $.forEach(data.content, function(key, value) {
-						var i = value.indexOf("{");
-						var _type = value.slice(0,i);
-						var _content = value.slice(i+1,-1);
-						if(_type=="CONTENT") {
-							return "<p>"+_content+"</p>"
-						}
-						if(_type=="IMAGE"){
-							return "<img src=\""+_content+"\" alt=\"\" />"
-						}
-					})
-					data.content = c.join("")
-					$.forEach(data, function(key, value) {
-						_tpl = _tpl.replace(new RegExp("\\$\\{"+key+"\\}", "g"), value)
-					})
-					main.innerHTML = _tpl
-				},
-				"fail": function(d, xhr) {
-					console.log(xhr.status)
-				}
-			})
-		},
-		"fail": function(d, xhr) {
-			console.log(xhr.status)
-		}
-	})
-})(Saber)
-</script>
+<script type="text/javascript" src="../js/blog/blog.js"></script>
 </html>

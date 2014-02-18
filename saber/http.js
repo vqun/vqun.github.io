@@ -39,8 +39,8 @@
 		if(config.ansyc) {
 			xhr.onreadystatechange = function() {
 				clearTimeout(tout);
-				var res = getResponse(config.type, xhr);
 				if(xhr.readyState==4) {
+					var res = getResponse(config.type, xhr);
 					if(xhr.status>=200&&xhr.status<400){
 						config.success(res, xhr)
 					}else{
@@ -51,7 +51,7 @@
 				}
 			}
 		}
-		xhr.open(config.method, url+(isGet?"?"+data:""), config.ansyc);
+		xhr.open(config.method, url+(isGet&&data?"?"+data:""), config.ansyc);
 		$.forEach(config.header, function(key, value) {
 			xhr.setRequestHeader(key, value);
 			return value

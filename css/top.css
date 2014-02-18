@@ -4,6 +4,15 @@
   font-style: normal;
   cursor:pointer;
 }
+.menu .logo{
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+}
+.menu .logo img{
+  width: 100%;
+  height: 100%;
+}
 .menu .headerRotate{
   -webkit-transform: rotate(-180deg);
   -webkit-transform-origin: left bottom;
