@@ -28,16 +28,12 @@
 		if(!config["header"]["X-Requested-With"]){
 			config["header"]["X-Requested-With"] = "XMLHttpRequest";
 		}
-
-		// config["header"]["Access-Control-Allow-Origin"] = "*";
-		config["header"]["Accept-Language"] = "zh-CN;q=1,zh;q=0.4,en-US;q=0.3"
-
 		var isGet = !!(config.method=="GET");
 		var data = $.forEach(config.data, function(key, value) {
 			return key+"="+value
 		}, []).join("&");
 		var tout = setTimeout(function() {
-			this.abort()
+			xhr.abort()
 			config.fail(null, xhr)
 		}, config.timeout)
 		if(config.ansyc) {

@@ -1,0 +1,44 @@
+.menu a{
+  text-decoration: none;
+  color: inherit;
+  font-style: normal;
+  cursor:pointer;
+}
+.menu .headerRotate{
+  -webkit-transform: rotate(-180deg);
+  -webkit-transform-origin: left bottom;
+  -webkit-transition: -webkit-transform .6s linear;
+}
+.menu .headerRotate a{
+  -webkit-transform: scale(-1,-1);
+  display: inline-block;
+}
+.nav, aside ul{
+  margin: 0;
+  padding: 0;
+  float:left;
+}
+.nav{
+  margin-right: 16em;
+  padding-left: 3em;
+}
+.nav li, aside ul li{
+  float: left;
+  list-style: none;
+  padding: 3em 0 3em 3em;
+}
+.nav li a, aside ul li a{
+  letter-spacing: 1px;
+  color: #e1dcd6;
+  font-size: 25px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.75);
+}
+.nav li a.active, .nav li a:hover{
+  color: white;
+  transition: color .2s linear;
+  -webkit-transition: color .2s linear;
+  text-shadow: none;
+}

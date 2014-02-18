@@ -1,0 +1,14 @@
+{
+	"template": "./template.thtml",
+	"title": "HTML5平台：在前进的路上",
+	"time": "2014-02-12",
+	"classify": "未分类",
+	"tag": "",
+	"content": [
+		"CONTENT{尽管将Android视为目标平台的开发者人数有着显著地增加，但是当提到首要平台时，大多开发者的选择依旧是iOS。相比移动平台届的两位老大哥，HTML5虽还没有达到和他们一样的成就，不过也有着不错的发展。}",
+		"IMAGE{http://www.html5cn.org/data/attachment/portal/201402/18/094613gbg21a2hgvvh16ql.jpg}",
+		"CONTENT{在美国和欧洲市场，iOS和Android对移动开发者的吸引力，不是其他平台能够比拟的。不过在剩余的其他市场中，开发者所青睐的却是HTML5。根据VisionMobile的调查，在南亚、南美以及中东和非洲市场，HTML5是继Android之后最受欢迎的平台，而iOS则排名第三。}",
+		"IMAGE{http://www.html5cn.org/data/attachment/portal/201402/18/094615eee0lq8z4cpqc48d.jpg}",
+		"CONTENT{换句话说，如果HTML5做的好，收入并不会比iOS差。}"
+	]
+}

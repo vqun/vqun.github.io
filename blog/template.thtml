@@ -1,0 +1,9 @@
+<div class="article">
+	<div class="title">
+		<h2>$${title}</h2>
+		<p><span>$${time}</span>&nbsp;&nbsp;&nbsp;&nbsp;分类：<a href="#">$${classify}</a></p>
+	</div>
+	<div class="content">$${content}</div>
+</div>
+<div class="aside">边栏</div>
+<br class="clear" />
