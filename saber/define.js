@@ -1,4 +1,5 @@
-(function(global, undefined) {
+// Http: the ajax module, very simple
+(function(Global, undefined) {
 	var CONFIG = {
 		"method": "GET",
 		"data": {},
@@ -11,10 +12,10 @@
 		"requesting": emptyFunc,
 		"timeout": 60*1000
 	};
-	global.Http = function() {
+	Global.Http = function() {
 		this.xhr = XHR();
 	}
-	global.Http.prototype.request = function(url, conf) {
+	Global.Http.prototype.request = function(url, conf) {
 		if(!url && !$.is(url, "string")) {
 			throw new Error("Need A Request URL")
 		}
@@ -40,8 +41,8 @@
 		}, config.timeout)
 		if(config.ansyc) {
 			xhr.onreadystatechange = function() {
-				clearTimeout(tout);
 				if(xhr.readyState==4) {
+					clearTimeout(tout);
 					var res = getResponse(config.type, xhr);
 					if(xhr.status>=200&&xhr.status<400){
 						config.success(res, xhr)
@@ -60,10 +61,10 @@
 		});
 		xhr.send(isGet?null:data)
 	}
-	global.Http.prototype.abort = function() {
+	Global.Http.prototype.abort = function() {
 		this.xhr.abort()
 	}
-	global.Http.request = function(url, conf) {
+	Global.Http.request = function(url, conf) {
 		var http = new Http();
 		http.request(url, conf);
 		return http
@@ -118,26 +119,45 @@
 	function emptyFunc() {}
 })(this);
 
-(function(global, undefined) {
+(function(Global, undefined) {
 	var REGEXP = {
 		"jsComment": /((\/\*([^*]|[\r\n]|(\*+([^*\/]|[\r\n])))*\*+\/)|(\/\/.*))/gm,
-		"module": /require\("\s*([^\s]+)\s*"\)/gm
+		"module": /require\("\s*([^\s]+)\s*"\)/gm,
+		"funcBody": /function\s*\([^\r\n]*\)\s*\{\s*((.|\s)*)\}/gm
 	}
+	// The completedModules are all the modules that are evaled
+	// The loadingModules are the modules that are loading or evaling
 	var Cached = {
 		"completedModules": {},
-		"loadingModules": {}
+		"loadingModules": {},
+		"modules": {}
 	}
+	// The main
 	function define(mod) {
-		var module = new Module(mod, this);
-		var modID = module.id;
+		// mod can be a function to mark as a native module
+		// and a module path as a remote module to be requested use Http
+		var isNative = typeof mod === "function";
+		if(isNative) {
+			var _mod = mod.toString().replace(REGEXP.funcBody, "$1")||"";
+			mod = new Date().getTime();
+		}
+		var modID = "__Saber__defined__" + mod;
+		var module = Cached.modules[modID] || (Cached.modules[modID] = new Module(mod, modID));
+		module.parents.push(this);
+		// If the module was already completed, just notice the dependenting module
 		if(Cached.completedModules[modID]) {
-			module.parent.complete(module);
+			module.notice();
 			return "complete"
 		}
+		// If the module is loading, just waiting for loading
 		if(Cached.loadingModules[modID]) {
 			return "loading"
 		}
 		Cached.loadingModules[modID] = module;
+		if(isNative) {
+			module.defined(_mod);
+			return "loading"
+		}
 		var http = new Http();
 		http.request(define.config.base + module.mod, {
 			"type": "text",
@@ -150,11 +170,11 @@
 	define.config = {
 		"base": "/"
 	}
-	function Module(mod, parent) {
+	function Module(mod, id) {
 		this.mod = mod;
-		this.parent = parent;
+		this.parents = [];
 		this.moduleCode = ""; // module code for eval after all the dependencies complete
-		this.id = "__Saber__defined__" + mod;
+		this.id = id;
 		this.dependencies = [];
 		this.dependent = 0;
 		this.uncomplete = 0;
@@ -187,25 +207,37 @@
 		if(!(--this.uncomplete)) {
 			return this.eval()
 		}else {
+			this.lock = false;
 			var nextMod = this.queue.shift();
 			this.complete(nextMod);
 			return "dealing"
 		}
 	}
 	Module.prototype.eval = function() {
-		eval.call(global, this.moduleCode);
+		eval.call(Global, this.moduleCode);
 		Cached.completedModules[this.id] = true;
 		Cached.loadingModules[this.id] = undefined;
-		if(this.parent === global) {
-			return "complete"
-		}
-		this.parent.complete(this);
-		return "dealing"
+		return this.notice();
 	}
-	global.define = define;
-	global.require = function() {};
+	Module.prototype.notice = function() {
+		var parents = this.parents;
+		var that = this;
+		for(var k = 0, len = parents.length;k<len;k++){
+			var currParent = parents[k];
+			setTimeout(function(){
+				if(currParent === Global) {
+					return "completed"
+				}
+				currParent.complete(that);
+				return "dealing"
+			}, 0)
+		}
+		return true
+	}
+	Global.define = define;
+	Global.require = function() {};
 	function RemoveComments(str) {
-		return str.replace(REGEXP.jsComment, "").replace(/(^\r|\n$)|^\s+|\s+$/gm, ";")
+		return str.replace(REGEXP.jsComment, "")//.replace(/(^\r|\n$)|^\s+|\s+$/gm, ";")
 	}
 	function CheckoutModules(mod) {
 		var ret = [];

@@ -38,8 +38,8 @@
 		}, config.timeout)
 		if(config.ansyc) {
 			xhr.onreadystatechange = function() {
-				clearTimeout(tout);
 				if(xhr.readyState==4) {
+					clearTimeout(tout);
 					var res = getResponse(config.type, xhr);
 					if(xhr.status>=200&&xhr.status<400){
 						config.success(res, xhr)

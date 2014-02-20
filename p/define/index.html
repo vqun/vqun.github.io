@@ -22,12 +22,30 @@ f.test();
 
 // 使用：
 &lt;script&gt;
-	define("js/modules/test2.js")
+	define(function() {
+		require("js/modules/test2.js");
+		alert(++b);
+	})
 &lt;/script&gt;
 	</textarea>
 </body>
 <script type="text/javascript" src="../../saber/define.js"></script>
 <script type="text/javascript">
-	define("js/modules/test2.js")
+	// define(function() {
+	// 	require("js/modules/test.js");
+	// })
+	// define(function() {
+	// 	require("js/modules/test2.js");
+	// })
+	var http1 = new Http();
+	http1.request("/js/modules/test.js", {
+		"type": "text",
+		"success": function(data){console.log(data)}
+	})
+	var http2 = new Http();
+	http2.request("/js/modules/test2.js", {
+		"type": "text",
+		"success": function(data){console.log(data)}
+	})
 </script>
 </html>
