@@ -1,4 +1,4 @@
-var a = 1
+var a = "a"
 var b = 2
 var f = {}
 alert(a)

@@ -18,7 +18,7 @@
 		if(!url && !$.is(url, "string")) {
 			throw new Error("Need A Request URL")
 		}
-		xhr = this.xhr||XHR();
+		var xhr = this.xhr||XHR();
 		if(!xhr) {return false}
 		var config = $.parseParam(CONFIG, conf);
 		config.method = config.method.toUpperCase();

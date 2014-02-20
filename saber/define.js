@@ -19,7 +19,7 @@
 		if(!url && !$.is(url, "string")) {
 			throw new Error("Need A Request URL")
 		}
-		xhr = this.xhr||XHR();
+		var xhr = this.xhr||XHR();
 		if(!xhr) {return false}
 		var config = parseParam(CONFIG, conf);
 		config.method = config.method.toUpperCase();
@@ -31,35 +31,36 @@
 		}
 		var isGet = !!(config.method=="GET");
 		var ds = [];
-		forEach.call(ds, config.data, function(key, value) {
-			this.push(key+"="+value)
+		forEach(config.data, function(key, value) {
+			ds.push(key+"="+value)
 		});
 		var data = ds.join("&");
-		var tout = setTimeout(function() {
-			xhr.abort()
-			config.fail(null, xhr)
-		}, config.timeout)
-		if(config.ansyc) {
-			xhr.onreadystatechange = function() {
-				if(xhr.readyState==4) {
-					clearTimeout(tout);
-					var res = getResponse(config.type, xhr);
-					if(xhr.status>=200&&xhr.status<400){
-						config.success(res, xhr)
-					}else{
-						config.fail(null, xhr)
-					}
+		var callback = function() {
+			if(xhr.readyState==4) {
+				clearTimeout(tout);
+				var res = getResponse(config.type, xhr);
+				if(xhr.status>=200&&xhr.status<400){
+					config.success(res, xhr)
 				}else{
-					config.requesting(xhr.readyState)
+					config.fail(null, xhr)
 				}
+			}else{
+				config.requesting(xhr.readyState)
 			}
+		}
+		if(config.ansyc) {
+			xhr.onreadystatechange = callback
 		}
 		xhr.open(config.method, url+(isGet&&data?"?"+data:""), config.ansyc);
 		forEach(config.header, function(key, value) {
 			xhr.setRequestHeader(key, value);
 			return value
 		});
-		xhr.send(isGet?null:data)
+		var tout = setTimeout(function() {
+			xhr.abort()
+			config.fail(null, xhr)
+		}, config.timeout)
+		isGet ? xhr.send() : xhr.send(data);
 	}
 	Global.Http.prototype.abort = function() {
 		this.xhr.abort()
@@ -160,6 +161,7 @@
 		}
 		var http = new Http();
 		http.request(define.config.base + module.mod, {
+			"method": "GET",
 			"type": "text",
 			"success": function(_mod, xhr) {
 				module.defined(_mod)

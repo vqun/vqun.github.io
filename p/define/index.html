@@ -30,22 +30,14 @@ f.test();
 	</textarea>
 </body>
 <script type="text/javascript" src="../../saber/define.js"></script>
+<script src="http://js.t.sinajs.cn/STK/theia/js/theia.js" type="text/javascript" ></script>
 <script type="text/javascript">
-	// define(function() {
-	// 	require("js/modules/test.js");
-	// })
-	// define(function() {
-	// 	require("js/modules/test2.js");
-	// })
-	var http1 = new Http();
-	http1.request("/js/modules/test.js", {
-		"type": "text",
-		"success": function(data){console.log(data)}
+	define(function() {
+		require("js/modules/test2.js");
+		alert(a)
 	})
-	var http2 = new Http();
-	http2.request("/js/modules/test2.js", {
-		"type": "text",
-		"success": function(data){console.log(data)}
+	define(function() {
+		require("js/modules/test.js");
 	})
 </script>
 </html>
