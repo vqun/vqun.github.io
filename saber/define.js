@@ -4,7 +4,7 @@
 		"method": "GET",
 		"data": {},
 		"charset": "UTF-8",
-		"type": "json",
+		"type": "text",
 		"ansyc": true,
 		"header": {},
 		"success": emptyFunc,
@@ -135,7 +135,7 @@
 	}
 	// The main
 	function define(mod) {
-		// mod can be a function to mark as a native module
+		// mod can be a function to be marked as a native module
 		// and a module path as a remote module to be requested use Http
 		var isNative = typeof mod === "function";
 		if(isNative) {
