@@ -1,185 +1,19 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <title>Vqun.github.io by vqun</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/top.css">
-  <link rel="stylesheet" href="./css/index.css">
+	<meta charset="UTF-8">
+	<title>首页</title>
 </head>
 <body>
-  <div style="background-color:#ef5638;width:100%;height:5px;position:fixed;top:0;left:0;z-index:1000"></div>
-  <section class="menu" style="opacity:0" id="menu">
-    <header><a href="./index.html?ref=vqun" class="logo"><img src="./images/logo.jpg" /></a></header>
-    <nav>
-      <ul class="nav" id="menuWrap">
-        <li><a href="#" data-action="modAct">HOME</a></li>
-        <li><a href="#" data-action="modAct">ABOUT</a></li>
-        <li><a href="#" data-action="modAct">BLOG</a></li>
-        <li><a href="#" data-action="modAct">PROJECTS</a></li>
-      </ul>
-      <br class="clear" />
-    </nav>
-    <aside>
-      <ul>
-        <li><a href="http://weibo.com/345727572" target="_blank"><img src="./images/icon/wb_16.png" alt="@ZengWq572">&nbsp;&nbsp;WEIBO</a></li>
-        <li><a href="http://user.qzone.qq.com/842885572" target="_blank"><img src="./images/icon/qq_16.png" alt="@ZengWq572">&nbsp;&nbsp;QZONE</a></li>
-      </ul>
-      <br class="clear" />
-    </aside>
-  </section>
-
-  <section class="content" style="display:none;height:0;" id="content">
-    <div ref="home" style="display:none;">
-      <article>
-        <h1>欢迎</h1>
-        <p>这是vQun的博客。</p>
-      </article>
-      <article>
-        <h1>Welcome</h1>
-        <p>This is vQun's blog.</p>
-      </article>
-    </div>
-    <div ref="about" style="display:none;">
-      <article>
-        <h1>关于</h1>
-        <p>博客用名vQun</p>
-      </article>
-      <article>
-        <h1>About</h1>
-        <p>Use vQun as my blog name.</p>
-      </article>
-    </div>
-    <div ref="blog" style="display:none;">
-      <article>
-        <h1>博文</h1>
-        <p><a href="/blog/?js/20130624" target="_blank">酱油的setTimeout</a></p>
-        <p><a href="/blog/?js/closure" target="_blank">读Javascript Closures文章</a></p>
-      </article>
-      <article>
-        <h1>Blog</h1>
-        <p><a href="/blog/?js/20130624" target="_blank">酱油的setTimeout</a></p>
-        <p><a href="/blog/?js/closure" target="_blank">读Javascript Closures文章</a></p>
-      </article>
-    </div>
-    <div ref="projects" style="display:none;">
-      <article>
-        <h1>项目</h1>
-        <p>有简单，有趣，有意义的东西。</p>
-      </article>
-      <article>
-        <h1>Projects</h1>
-        <p>Many easy examples with fun and meaning, and fill all my own spirit.</p>
-      </article>
-      <article style="position: absolute;top: 90px;left: 50%;margin-left: -160px;overflow: hidden;height: 300px;width: 300px;">
-        <iframe src="./p/third/tagCloud/index.html" frameborder="0" width="300" height="300" style="position:absolute;top:50%;left:50%;margin-top:-150px;margin-left:-150px;z-index:10000;"></iframe>
-      </article>
-    </div>
-  </section>
-  <div class="slider_bg" onselectstart="return false" oncopy="return false" oncut="return false" oncontextmenu="return false">
-    <ul id="sliderBg">
-      <li><img src="./images/bg/slider_bg_1.jpg" alt=""></li>
-      <li><img src="./images/bg/slider_bg_2.jpg" alt=""></li>
-      <li><img src="./images/bg/slider_bg_3.jpg" alt=""></li>
-      <li><img src="./images/bg/slider_bg_4.jpg" alt=""></li>
-      <br class="clear" />
-    </ul>
-  </div>
+	<h1>Coming Soon!</h1>
 </body>
-<script type="text/javascript" src="./saber/base.js"></script>
-<script type="text/javascript" src="./saber/animate.js"></script>
+<script type="text/javascript" src="./lib/saber.js"></script>
+<script type="text/javascript" src="./lib/rabbit.min.js"></script>
 <script type="text/javascript">
-  (function($){
-    var menuEl = $.id("menu"),
-        menuWrapEl = $.id("menuWrap"),
-        menuList = $.T("a", menuWrapEl);
-    var contentEl = $.id("content"),
-        contentList = $.T("div", contentEl),
-        currentContentEl = $.C("currC", contentEl)[0] || null;
-    var activedEl = $.C("active", menuEl)[0] || null;
-    var actions = {
-      lock: false,
-      init: function() {
-        var menuAni = $.ani.animate(menuEl, {
-          end: function(el) {
-            menuAni = null;
-          },
-          duration: 1000
-        });
-        menuAni.finish({
-          "opacity": 1
-        })
-      },
-      modAct: function(e) {
-        if(actions.lock) return false;
-        e = e || window.event;
-        var target = e.target || e.srcElement;
-        if(activedEl == target) return false;
-        actions.lock = true;
-        if(target.data && target.data["action"] == "modAct" || target.getAttribute("data-action") == "modAct") {
-          var menuAni = $.ani.animate(menuEl, {
-            duration:300,
-            end: function(ref) {
-              if(activedEl){
-                activedEl.className = "";
-              }
-              target.className = "active";
-              activedEl = target;
-              actions.modContentShow(ref, $.indexOf(target, menuList));
-              menuAni = null;
-            }
-          }, "spring2");
-          menuAni.finish({
-            "top": 100
-          });
-        }
-      },
-      modContentShow: function(ref, index) {
-        var refTop = parseInt($.style(ref, "top"), 10);
-        $.style(contentEl, "top", refTop+"px");
-        if(currentContentEl) {
-          var contentAni = $.ani.animate(contentEl, {
-            end: function(el){
-              contentAni = null;
-              $.style(currentContentEl, "display", "none");
-              currentContentEl = contentList[index];
-              currentContentEl.style.display = "";
-              var contentAniShow = $.ani.animate(contentEl, {
-                end: function() {
-                  contentAniShow = null;
-                  actions.lock = false;
-                }
-              });
-              contentAniShow.finish({
-                "height": 400,
-                "display": ""
-              })
-            }
-          });
-          contentAni.finish({
-            "height": 0
-          });
-          return true
-        }
-        currentContentEl = contentList[index];
-        currentContentEl.style.display = "";
-        var contentAni = $.ani.animate(contentEl, {
-          end: function(el){
-            $.first(menuEl).className = "headerRotate";
-            contentAni = null;
-            actions.lock = false;
-          }
-        });
-        contentAni.finish({
-          "height": 400,
-          "display": ""
-        })
-      }
-    }
-    actions.init();
-    $.on(menuEl, "click", actions.modAct);
-  })(Saber)
+	(function(Global, Base){
+		this.App = new Base.Controller({
+			"VIEW_BASE": "views"
+		})
+	})(this, Rabbit);
 </script>
 </html>
