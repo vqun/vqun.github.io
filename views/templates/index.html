@@ -1,0 +1,14 @@
+<section class="index-main">
+  <%@each(articles, k, article)%>
+  <article>
+    <header>
+      <hgroup>
+        <h3 class="blog-title"><%=article.title%></h3>
+        <h6><%=article.date%></h6>
+      </hgroup>
+    </header>
+    <p><%=article.abstract%></p>
+  </article>
+  <%/@each%>
+</section>
+<aside class="index-aside"><%=aside%></aside>

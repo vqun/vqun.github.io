@@ -405,7 +405,7 @@
     function getResponse(type, xhr) {
       var res = null;
       if(type=="json") {
-        res = xhr.responseText&&$.is(xhr.responseText, "string") ? eval("("+xhr.responseText+")") : {}
+        xhr.responseText&&$.is(xhr.responseText, "string") ? eval("res=("+xhr.responseText+")") : (res = {})
       }else if(type=="text") {
         res = xhr.responseText
       }else if(type=="xml") {

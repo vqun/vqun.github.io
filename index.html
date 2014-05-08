@@ -3,17 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <title>首页</title>
+  <style type="text/css">
+    body{
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2%;
+    }
+    h1, h2, h3, h4, h5, h6{
+      padding: 0;
+      margin: 0;
+      font-weight: normal;
+    }
+    a{
+      text-decoration: none;
+    }
+    em{
+      font-style: normal;
+    }
+    .saber-clear:after{
+      content: "";
+      clear:both;
+      display: block;
+      height: 0;
+      width: 0;
+    }
+    .saber-menu{
+      height: 15em;
+      font-weight: normal;
+    }
+    .saber-menu .saber-barmenu-wrap{
+      background-color: #ddd;
+      height: 100%;
+    }
+    .saber-menu nav{
+      float: left;
+      width: 80%;
+      height: 100%;
+    }
+    .saber-menu ul{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .saber-menu li{
+      cursor: pointer;
+      background-color: none;
+      display: inline-block;
+      height: 100%;
+      list-style: none;
+      line-height: 5em;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      transition: background-color .5s ease 0;
+      width: 24%;
+    }
+    .saber-menu li:hover{
+      background-color: rgba(250,250,250,0.8);
+      transition: background-color 1s ease 0;
+    }
+    .saber-menu button{
+      background: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      float:right;
+      padding: .5em;
+    }
+    .saber-menu button:hover{
+      background-color: #F7F7F7;
+    }
+    .saber-menu .saber-menu-bar{
+      background-color: #563d7c;
+      display: block;
+      height: .3125em;
+      margin: .3125em;
+      width: 3em;
+    }
+    .saber-view{
+      margin: 1em 0;
+    }
+    .saber-view .index-main{
+      color: white;
+      margin-bottom: 5%;
+    }
+    .saber-view .index-main article{
+      background-color: #FFA200;
+      padding: 2%;
+      border-radius: 3px;
+      box-shadow: 1px 1px 5px #000000;
+      margin-bottom: 1em;
+    }
+    .saber-view .index-main article .blog-title{
+      text-shadow: 0px 1px 0px rgba(27, 13, 13, 0.8);
+    }
+    .saber-view .index-aside{
+      margin-bottom: 5%;
+    }
+    @media screen and (min-width: 768px) {
+      .saber-barmenu-wrap{
+        float: left;
+        height: 10em;
+        width: 20%;
+      }
+      .saber-barmenu-wrap .saber-logo{
+        height: auto;
+        width: 100%;
+        cursor: pointer;
+      }
+      .saber-view .index-main{
+        float: left;
+        width: 70%;
+        margin-bottom: 0;
+      }
+      .saber-view .index-aside{
+        float: right;
+        width: 25%;
+        margin-bottom: 0;
+      }
+      .saber-menu .saber-logo{
+        display: inline-block;
+        height: auto;
+        text-align: center;
+        width: 100%;
+      }
+      .saber-menu .saber-logo img{
+        max-height: 100%;
+        height: auto;
+        width: 100%;
+      }
+      .saber-menu .saber-logo em{
+        display: none;
+      }
+    }
+    @media screen and (max-width: 768px) {
+      .saber-menu{
+        height: 3em;
+      }
+      .saber-menu .saber-barmenu-wrap{
+        height: 100%;
+      }
+      .saber-menu nav{
+        display: none;
+        width: 100%;
+      }
+      .saber-menu button{
+        display: inline-block;
+        background-color: #FCFCFC;
+        height: 100%;
+      }
+      .saber-menu li{
+        display: list-item;
+        font-size: 1em;
+        font-weight: normal;
+        height: 3em;
+        line-height: 3em;
+        width: 100%;
+        text-align: right;
+      }
+      .saber-menu .saber-logo{
+        display: inline-block;
+        height: 3em;
+        line-height: 3em;
+        cursor: pointer;
+      }
+      .saber-menu .saber-logo img{
+        height: 3em;
+        width: auto;
+      }
+      .saber-menu .saber-logo em{
+        vertical-align: top;
+        display: inline;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Coming Soon!</h1>
+  <!-- <h1>Coming Soon!</h1> -->
+  <div>
+    <header class="saber-menu saber-clear">
+      <div class="saber-clear saber-barmenu-wrap">
+        <span href="#" class="saber-logo">
+          <img src="./res/logo/logo@512.png" />
+          <em>VeeQun</em>
+        </span>
+        <button>
+          <span class="saber-menu-bar"></span>
+          <span class="saber-menu-bar"></span>
+          <span class="saber-menu-bar"></span>
+        </button>
+      </div>
+      <nav>
+        <ul>
+          <li data-viewpath="#">HOME</li>
+          <li data-viewpath="#blog">BLOG</li>
+          <li data-viewpath="#project">PROJECT</li>
+          <li data-viewpath="#about">ABOUT</li>
+        </ul>
+      </nav>
+    </header>
+    <div id="main"></div>
+    <footer>啊，，哪有啥footer可言哈</footer>
+  </div>
 </body>
 <script type="text/javascript" src="./lib/saber.js"></script>
+<script type="text/javascript" src="./lib/plugins/vTemplate.js"></script>
 <script type="text/javascript" src="./lib/rabbit.min.js"></script>
 <script type="text/javascript">
-  (function(Global, Base){
+  (function(Global, Base, $){
     this.App = new Base.Controller({
-      "VIEW_BASE": "views"
+      "VIEW_BASE": "views",
+      "MAIN_CONTAINER": $.id("main")
     })
-  })(this, Rabbit);
+  })(this, Rabbit, Saber);
 </script>
 </html>
