@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>VeeQun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="VeeQun">
+<meta property="og:url" content="https://vqun.github.io/page/3/index.html">
+<meta property="og:site_name" content="VeeQun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VeeQun">
+  
+    <link rel="alternate" href="/atom.xml" title="VeeQun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">VeeQun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个前端人的装逼博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vqun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-js-number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/js-number/" class="article-date">
+  <time datetime="2017-05-31T08:34:16.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/js-number/">JS基础之三：Number</a>
+    </h1>
+  
+
+      </header>
+    
+    <aside class="article-aside">
+      <a data-url="https://vqun.github.io/js-number/" data-id="cj3cqjwiy0009z5vxagbz2i67" data-title="JS基础之三：Number" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+
+    </aside>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="3-1-字面值和对象值"><a href="#3-1-字面值和对象值" class="headerlink" title="3.1 字面值和对象值"></a>3.1 字面值和对象值</h2><p>这个和String类似，就不再重赘了。</p>
+<h2 id="3-2-常用方法"><a href="#3-2-常用方法" class="headerlink" title="3.2 常用方法"></a>3.2 常用方法</h2><h3 id="3-2-1-toString-转换为字符串"><a href="#3-2-1-toString-转换为字符串" class="headerlink" title="3.2.1 toString 转换为字符串"></a>3.2.1 toString 转换为字符串</h3><p>可能你会说数字转换成字符串，直接用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数字转换成字符串</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> aStr = <span class="string">""</span> + a;</div></pre></td></tr></table></figure>
+<p>确实，这可以转，只是这里要说的toString有另外用途：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toString(base)</div><div class="line">@param base 进制数，2~36</div><div class="line">@return 返回按base转换的数字字符串</div></pre></td></tr></table></figure>
+<p>只要传入想要转换的进制数，就可以直接将数字转换成对应的数值字符串了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</div><div class="line">alert(num.toString()); <span class="comment">//"10"</span></div><div class="line">alert(num.toString(<span class="number">2</span>)); <span class="comment">//"1010"</span></div><div class="line">alert(num.toString(<span class="number">8</span>)); <span class="comment">//"12"</span></div><div class="line">alert(num.toString(<span class="number">10</span>)); <span class="comment">//"10"</span></div><div class="line">alert(num.toString(<span class="number">16</span>)); <span class="comment">//"a"</span></div></pre></td></tr></table></figure>
+<h3 id="3-2-2-toFixed-保留小数精度"><a href="#3-2-2-toFixed-保留小数精度" class="headerlink" title="3.2.2 toFixed 保留小数精度"></a>3.2.2 toFixed 保留小数精度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toFixed(digits)</div><div class="line">@param digits 小数位数</div><div class="line">@return 返回digits精度的数值字符串，使用四舍五入</div></pre></td></tr></table></figure>
+<h3 id="3-2-2-toPrecision-保留数值位数"><a href="#3-2-2-toPrecision-保留数值位数" class="headerlink" title="3.2.2 toPrecision 保留数值位数"></a>3.2.2 toPrecision 保留数值位数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toPrecision(digits)</div><div class="line">@param digits 数值位数</div><div class="line">@return 返回digits位数的数值字符串，使用四舍五入</div></pre></td></tr></table></figure>
+<p>对于数值位数本身超过digits的，会使用e写法，不足的补零</p>
+<h3 id="3-2-3-toExponential-转换成e写法"><a href="#3-2-3-toExponential-转换成e写法" class="headerlink" title="3.2.3 toExponential 转换成e写法"></a>3.2.3 toExponential 转换成e写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@desc toExponential()</div><div class="line">@return 返回e写法的数值字符串</div></pre></td></tr></table></figure>
+<h2 id="3-3-其他"><a href="#3-3-其他" class="headerlink" title="3.3 其他"></a>3.3 其他</h2><h3 id="3-3-1-将字符串转成数字"><a href="#3-3-1-将字符串转成数字" class="headerlink" title="3.3.1 将字符串转成数字"></a>3.3.1 将字符串转成数字</h3><p>字符串转成数字，方法很多：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> nStr = <span class="string">"127890"</span>;</div><div class="line"><span class="comment">// 1. parseInt, parseFloat</span></div><div class="line"><span class="comment">// parseInt可以传入第二个参数——进制数，转换时会以该进制数来转换字符串，默认10</span></div><div class="line"><span class="comment">// 要求字符串以数字或者0x、0X、0或者+、-号开头，无法转undefined、null等</span></div><div class="line"><span class="keyword">var</span> n = <span class="built_in">parseInt</span>(nStr);</div><div class="line"><span class="comment">// 2. Number</span></div><div class="line"><span class="keyword">var</span> n = <span class="built_in">Number</span>(nStr);</div><div class="line"><span class="comment">// 3. +，-</span></div><div class="line"><span class="keyword">var</span> n = +nStr;</div><div class="line"><span class="keyword">var</span> n = -(-nStr);</div><div class="line"><span class="keyword">var</span> n = nStr - <span class="number">0</span>;</div><div class="line"><span class="comment">// 4. ~，&lt;&lt;，&gt;&gt;，只能用于纯数字字符串，可以转undefined、null等</span></div><div class="line"><span class="keyword">var</span> n = ~~nStr;</div><div class="line"><span class="keyword">var</span> n = nStr&lt;&lt;<span class="number">0</span>;</div><div class="line"><span class="keyword">var</span> n = nStr&gt;&gt;<span class="number">0</span>;</div></pre></td></tr></table></figure>
+<p>上述方法，并非都是一劳永逸的，比如第4种方法，因为使用的是位操作符，受位操作的32位限制，具体有兴趣的可以看ECMA262相关的说明。</p>
+<p>这些方法，也适用于其他类型转换成数字。</p>
+
+      
+    </div>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js-string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/js-string/" class="article-date">
+  <time datetime="2017-05-31T08:33:08.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/js-string/">JS基础之二：String</a>
+    </h1>
+  
+
+      </header>
+    
+    <aside class="article-aside">
+      <a data-url="https://vqun.github.io/js-string/" data-id="cj3cqifde0006z5vxrmmlr2vu" data-title="JS基础之二：String" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+
+    </aside>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="2-1-字面值和对象值"><a href="#2-1-字面值和对象值" class="headerlink" title="2.1 字面值和对象值"></a>2.1 字面值和对象值</h2><p>字面值，就是看上去长啥就是啥；对象值，通过内置String对象new出来的，两者有着很大的不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//字面值</span></div><div class="line"><span class="keyword">var</span> str1 = <span class="string">"i am str1"</span>;</div><div class="line"><span class="keyword">var</span> str2 = <span class="built_in">String</span>(<span class="string">"i am str2"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 对象值</span></div><div class="line"><span class="keyword">var</span> str3 = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">"i am str3"</span>);</div></pre></td></tr></table></figure>
+<p>两者不同归结为一点：字面值是基本类型，没有属性，没有方法，也不能往上添加属性或方法；对象值是引用类型，是一个对象，有属性，有方法，可以添加属性和方法。</p>
+<p>有人可能会有疑问：咦，我都可以直接str1.split(“”)啊，str1不是有split方法吗？还有其他String方法。OK，这里需要知道一点，之所以你可以这么用这么写，只是因为解释器在内部做了临时转换：将str1转换成了new String(str1)。这就是为什么，你可以使用String的各种方法、属性。</p>
+<p>另外，字符串是不可变的。你做的所有变更，都只是替换。</p>
+<h2 id="2-2-常用方法"><a href="#2-2-常用方法" class="headerlink" title="2.2 常用方法"></a>2.2 常用方法</h2><h3 id="2-2-1-indexOf-查找子串"><a href="#2-2-1-indexOf-查找子串" class="headerlink" title="2.2.1 indexOf 查找子串"></a>2.2.1 indexOf 查找子串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@desc indexOf(search[, from])</div><div class="line">@param search 要查找的字串，区分大小写，不可用正则</div><div class="line">@param from 查找起始位置，值索引值，可选，默认0</div><div class="line">@return 返回字串首次出现的位置，值为索引值，没有找到返回-1</div></pre></td></tr></table></figure>
+<h3 id="2-2-2-lastIndexOf-反向查找子串"><a href="#2-2-2-lastIndexOf-反向查找子串" class="headerlink" title="2.2.2 lastIndexOf 反向查找子串"></a>2.2.2 lastIndexOf 反向查找子串</h3><p>该方法与indexOf类似，只是方向相反，从后往前找</p>
+<h3 id="2-2-3-charAt-获取指定位置的字符"><a href="#2-2-3-charAt-获取指定位置的字符" class="headerlink" title="2.2.3 charAt 获取指定位置的字符"></a>2.2.3 charAt 获取指定位置的字符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc charAt(index)</div><div class="line">@param index 要获取的字符的索引，0~length-1</div><div class="line">@return 返回获取的字符，若index不在范围内，返回空字符</div></pre></td></tr></table></figure>
+<h3 id="2-2-4-charCodeAt-获取指定索引对应字符的Unicode编码"><a href="#2-2-4-charCodeAt-获取指定索引对应字符的Unicode编码" class="headerlink" title="2.2.4 charCodeAt 获取指定索引对应字符的Unicode编码"></a>2.2.4 charCodeAt 获取指定索引对应字符的Unicode编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc charCodeAt(index)</div><div class="line">@param index 要获取的字符的索引，0~length-1</div><div class="line">@return 返回获index所指位置的字符的Unicode编码，若index不在范围内，返回NaN</div></pre></td></tr></table></figure>
+<h3 id="2-2-5-split-切分字符串为数组"><a href="#2-2-5-split-切分字符串为数组" class="headerlink" title="2.2.5 split 切分字符串为数组"></a>2.2.5 split 切分字符串为数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@desc split(separator[, length])</div><div class="line">@param separator分隔符，可用正则</div><div class="line">@param length生成的数组最大长度，可选，默认不限长度</div><div class="line">@return 返回分隔符切分后的数组</div></pre></td></tr></table></figure>
+<h3 id="2-2-6-slice-提取字符串"><a href="#2-2-6-slice-提取字符串" class="headerlink" title="2.2.6 slice 提取字符串"></a>2.2.6 slice 提取字符串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@desc slice(start[, end])</div><div class="line">@param start字符串起始位置，索引值，可为负值，表示从后往前</div><div class="line">@param end字符串结束位置，索引值，可选，默认length，可为负数，表示从后往前</div><div class="line">@return 返回从start~end-1的字串</div></pre></td></tr></table></figure>
+<h3 id="2-2-7-toLowerCase转为小写，toUpperCase转为大写"><a href="#2-2-7-toLowerCase转为小写，toUpperCase转为大写" class="headerlink" title="2.2.7 toLowerCase转为小写，toUpperCase转为大写"></a>2.2.7 toLowerCase转为小写，toUpperCase转为大写</h3><p>没啥好说的</p>
+<h3 id="2-2-8-match-字符串匹配"><a href="#2-2-8-match-字符串匹配" class="headerlink" title="2.2.8 match 字符串匹配"></a>2.2.8 match 字符串匹配</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc match(what)</div><div class="line">@param what匹配串/正则</div><div class="line">@return 返回匹配的字符串组成的数组</div></pre></td></tr></table></figure>
+<p>这个方法参数what如果是字符串，没啥太大意思，因为永远只返回数组：[第一个匹配值]。如果what是正则，1.没有全局g，只返回一次匹配；2.有全局g，返回全匹配。</p>
+<p>该方法与正则的<code>exec</code>方法类似</p>
+<h3 id="2-2-9-replace-字符串替换"><a href="#2-2-9-replace-字符串替换" class="headerlink" title="2.2.9 replace 字符串替换"></a>2.2.9 replace 字符串替换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@desc replace(replaced, replacement)</div><div class="line">@param replaced被替换的，可为字符串，可为正则</div><div class="line">@param replacement替换品，可为字符串，可为函数</div><div class="line">@return 返回替换后的字符串，原串不改变</div></pre></td></tr></table></figure>
+<p>与match有点类似，如果replaced是字符串，匹配一个并替换；如果是正则：1.没有全局g，只匹配一次并替换；2.有全局g，匹配全部并替换。</p>
+<p>对于replacement，如果是字符串，直接替换；如果是函数，则以函数的返回值作为替换值：replacement(匹配串，匹配子串1, …, 匹配子串N, 匹配索引, 原串)</p>
+<p>在replacement中，$符有特殊的用法：</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>替换文本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$1、$2、…、$99</td>
+<td>与 regexp 中的第 1 到第 99 个子表达式相匹配的文本</td>
+</tr>
+<tr>
+<td>$&amp;</td>
+<td>与 regexp 相匹配的子串</td>
+</tr>
+<tr>
+<td>$`</td>
+<td>位于匹配子串左侧的文本</td>
+</tr>
+<tr>
+<td>$’</td>
+<td>位于匹配子串右侧的文本</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>直接量符号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>_注：$01~$09与$1~$9是相同的</strong>_</p>
+<h3 id="2-2-10-concat-字符串连接"><a href="#2-2-10-concat-字符串连接" class="headerlink" title="2.2.10 concat 字符串连接"></a>2.2.10 concat 字符串连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc concat(str1, str2, ..., strN)</div><div class="line">@param strN 拼接的字符串</div><div class="line">@return 返回拼接后的字符串，原串不变</div></pre></td></tr></table></figure>
+<p>参数可以非字符串，但是，会做toString处理</p>
+<h3 id="2-2-11-trim-字符串前后空字符截断"><a href="#2-2-11-trim-字符串前后空字符截断" class="headerlink" title="2.2.11 trim 字符串前后空字符截断"></a>2.2.11 trim 字符串前后空字符截断</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@desc trim()</div><div class="line">@return 返回截断空字符后的字符串</div></pre></td></tr></table></figure>
+<p>该方法是ECMAScript5新增的方法，对于需要兼容ECMAScript3的，可以使用replace方法实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">String</span>.prototype.trim !== <span class="string">"function"</span>)&#123;</div><div class="line">  <span class="built_in">String</span>.prototype.trim = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    retrun <span class="keyword">this</span>.replace(<span class="regexp">/^\s+|\s+$/gm</span>, <span class="string">""</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，如果不想直接在String.prototype上添加方法，可以直接使用string.replace(/^\s+|\s+$/gm, “”)。</p>
+<h2 id="2-3-其他"><a href="#2-3-其他" class="headerlink" title="2.3 其他"></a>2.3 其他</h2><h3 id="2-3-1-字符串连接的三种方式"><a href="#2-3-1-字符串连接的三种方式" class="headerlink" title="2.3.1 字符串连接的三种方式"></a>2.3.1 字符串连接的三种方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var str1 = &quot;Hello&quot;, res;</div><div class="line">// 1. 使用concat方法</div><div class="line">res = str1.concat(&quot; world&quot;, &quot;!&quot;);</div><div class="line">// 2. 使用加号+连接</div><div class="line">res = str1 + &quot; world&quot; + &quot;!&quot;</div><div class="line">// 3. 使用数组的join方法</div><div class="line">res = [str1, &quot; world&quot;, &quot;!&quot;].join(&quot;&quot;);</div></pre></td></tr></table></figure>
+<p>关于这三种方法的性能问题，一般而言，join性能最好，concat最差，特别是在连接长字符串时</p>
+
+      
+    </div>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件/">组件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JS基础/" style="font-size: 15px;">JS基础</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/组件/" style="font-size: 10px;">组件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/js-component/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/js-prototype/">JS基础之六：原型和原型链</a>
+          </li>
+        
+          <li>
+            <a href="/js-array/">JS基础之五：Array</a>
+          </li>
+        
+          <li>
+            <a href="/js-object/">JS基础之四：Object</a>
+          </li>
+        
+          <li>
+            <a href="/js-number/">JS基础之三：Number</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 veequn@qq.com<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

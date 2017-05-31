@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS基础之三：Number | VeeQun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="3.1 字面值和对象值这个和String类似，就不再重赘了。 3.2 常用方法3.2.1 toString 转换为字符串可能你会说数字转换成字符串，直接用 123// 数字转换成字符串var a = 1;var aStr = &quot;&quot; + a; 确实，这可以转，只是这里要说的toString有另外用途： 123@desc toString(base)@param base 进制数，2~36@retur">
+<meta name="keywords" content="Javascript,JS基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS基础之三：Number">
+<meta property="og:url" content="https://vqun.github.io/js-number/index.html">
+<meta property="og:site_name" content="VeeQun">
+<meta property="og:description" content="3.1 字面值和对象值这个和String类似，就不再重赘了。 3.2 常用方法3.2.1 toString 转换为字符串可能你会说数字转换成字符串，直接用 123// 数字转换成字符串var a = 1;var aStr = &quot;&quot; + a; 确实，这可以转，只是这里要说的toString有另外用途： 123@desc toString(base)@param base 进制数，2~36@retur">
+<meta property="og:updated_time" content="2017-05-31T08:40:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS基础之三：Number">
+<meta name="twitter:description" content="3.1 字面值和对象值这个和String类似，就不再重赘了。 3.2 常用方法3.2.1 toString 转换为字符串可能你会说数字转换成字符串，直接用 123// 数字转换成字符串var a = 1;var aStr = &quot;&quot; + a; 确实，这可以转，只是这里要说的toString有另外用途： 123@desc toString(base)@param base 进制数，2~36@retur">
+  
+    <link rel="alternate" href="/atom.xml" title="VeeQun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">VeeQun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个前端人的装逼博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vqun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/js-number/" class="article-date">
+  <time datetime="2017-05-31T08:34:16.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS基础之三：Number
+    </h1>
+  
+
+      </header>
+    
+    <aside class="article-aside">
+      <a data-url="https://vqun.github.io/js-number/" data-id="cj3cqjwiy0009z5vxagbz2i67" data-title="JS基础之三：Number" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+
+    </aside>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="3-1-字面值和对象值"><a href="#3-1-字面值和对象值" class="headerlink" title="3.1 字面值和对象值"></a>3.1 字面值和对象值</h2><p>这个和String类似，就不再重赘了。</p>
+<h2 id="3-2-常用方法"><a href="#3-2-常用方法" class="headerlink" title="3.2 常用方法"></a>3.2 常用方法</h2><h3 id="3-2-1-toString-转换为字符串"><a href="#3-2-1-toString-转换为字符串" class="headerlink" title="3.2.1 toString 转换为字符串"></a>3.2.1 toString 转换为字符串</h3><p>可能你会说数字转换成字符串，直接用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数字转换成字符串</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> aStr = <span class="string">""</span> + a;</div></pre></td></tr></table></figure>
+<p>确实，这可以转，只是这里要说的toString有另外用途：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toString(base)</div><div class="line">@param base 进制数，2~36</div><div class="line">@return 返回按base转换的数字字符串</div></pre></td></tr></table></figure>
+<p>只要传入想要转换的进制数，就可以直接将数字转换成对应的数值字符串了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> num = <span class="number">10</span>;</div><div class="line">alert(num.toString()); <span class="comment">//"10"</span></div><div class="line">alert(num.toString(<span class="number">2</span>)); <span class="comment">//"1010"</span></div><div class="line">alert(num.toString(<span class="number">8</span>)); <span class="comment">//"12"</span></div><div class="line">alert(num.toString(<span class="number">10</span>)); <span class="comment">//"10"</span></div><div class="line">alert(num.toString(<span class="number">16</span>)); <span class="comment">//"a"</span></div></pre></td></tr></table></figure>
+<h3 id="3-2-2-toFixed-保留小数精度"><a href="#3-2-2-toFixed-保留小数精度" class="headerlink" title="3.2.2 toFixed 保留小数精度"></a>3.2.2 toFixed 保留小数精度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toFixed(digits)</div><div class="line">@param digits 小数位数</div><div class="line">@return 返回digits精度的数值字符串，使用四舍五入</div></pre></td></tr></table></figure>
+<h3 id="3-2-2-toPrecision-保留数值位数"><a href="#3-2-2-toPrecision-保留数值位数" class="headerlink" title="3.2.2 toPrecision 保留数值位数"></a>3.2.2 toPrecision 保留数值位数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@desc toPrecision(digits)</div><div class="line">@param digits 数值位数</div><div class="line">@return 返回digits位数的数值字符串，使用四舍五入</div></pre></td></tr></table></figure>
+<p>对于数值位数本身超过digits的，会使用e写法，不足的补零</p>
+<h3 id="3-2-3-toExponential-转换成e写法"><a href="#3-2-3-toExponential-转换成e写法" class="headerlink" title="3.2.3 toExponential 转换成e写法"></a>3.2.3 toExponential 转换成e写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@desc toExponential()</div><div class="line">@return 返回e写法的数值字符串</div></pre></td></tr></table></figure>
+<h2 id="3-3-其他"><a href="#3-3-其他" class="headerlink" title="3.3 其他"></a>3.3 其他</h2><h3 id="3-3-1-将字符串转成数字"><a href="#3-3-1-将字符串转成数字" class="headerlink" title="3.3.1 将字符串转成数字"></a>3.3.1 将字符串转成数字</h3><p>字符串转成数字，方法很多：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> nStr = <span class="string">"127890"</span>;</div><div class="line"><span class="comment">// 1. parseInt, parseFloat</span></div><div class="line"><span class="comment">// parseInt可以传入第二个参数——进制数，转换时会以该进制数来转换字符串，默认10</span></div><div class="line"><span class="comment">// 要求字符串以数字或者0x、0X、0或者+、-号开头，无法转undefined、null等</span></div><div class="line"><span class="keyword">var</span> n = <span class="built_in">parseInt</span>(nStr);</div><div class="line"><span class="comment">// 2. Number</span></div><div class="line"><span class="keyword">var</span> n = <span class="built_in">Number</span>(nStr);</div><div class="line"><span class="comment">// 3. +，-</span></div><div class="line"><span class="keyword">var</span> n = +nStr;</div><div class="line"><span class="keyword">var</span> n = -(-nStr);</div><div class="line"><span class="keyword">var</span> n = nStr - <span class="number">0</span>;</div><div class="line"><span class="comment">// 4. ~，&lt;&lt;，&gt;&gt;，只能用于纯数字字符串，可以转undefined、null等</span></div><div class="line"><span class="keyword">var</span> n = ~~nStr;</div><div class="line"><span class="keyword">var</span> n = nStr&lt;&lt;<span class="number">0</span>;</div><div class="line"><span class="keyword">var</span> n = nStr&gt;&gt;<span class="number">0</span>;</div></pre></td></tr></table></figure>
+<p>上述方法，并非都是一劳永逸的，比如第4种方法，因为使用的是位操作符，受位操作的32位限制，具体有兴趣的可以看ECMA262相关的说明。</p>
+<p>这些方法，也适用于其他类型转换成数字。</p>
+
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/js-object/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JS基础之四：Object
+        
+      </div>
+    </a>
+  
+  
+    <a href="/js-string/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS基础之二：String</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件/">组件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JS基础/" style="font-size: 15px;">JS基础</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/组件/" style="font-size: 10px;">组件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/js-component/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/js-prototype/">JS基础之六：原型和原型链</a>
+          </li>
+        
+          <li>
+            <a href="/js-array/">JS基础之五：Array</a>
+          </li>
+        
+          <li>
+            <a href="/js-object/">JS基础之四：Object</a>
+          </li>
+        
+          <li>
+            <a href="/js-number/">JS基础之三：Number</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 veequn@qq.com<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

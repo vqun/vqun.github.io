@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS基础之六：原型和原型链 | VeeQun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="6.1 原型和prototype首先，有个小概念性的东西需要记住，虽然prototype译为“原型”，但是原型和prototype是两码事:  原型和prototype只针对于对象，基本数据类型不是对象，没有原型和prototype。更确切讲，只针对ECMA对象，那些宿主对象（如：document）就因浏览器不同，可能不同了 所有的对象都有原型，但是，不是所有的对象都有prototype 只有那些">
+<meta name="keywords" content="Javascript,JS基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS基础之六：原型和原型链">
+<meta property="og:url" content="https://vqun.github.io/js-prototype/index.html">
+<meta property="og:site_name" content="VeeQun">
+<meta property="og:description" content="6.1 原型和prototype首先，有个小概念性的东西需要记住，虽然prototype译为“原型”，但是原型和prototype是两码事:  原型和prototype只针对于对象，基本数据类型不是对象，没有原型和prototype。更确切讲，只针对ECMA对象，那些宿主对象（如：document）就因浏览器不同，可能不同了 所有的对象都有原型，但是，不是所有的对象都有prototype 只有那些">
+<meta property="og:updated_time" content="2017-05-31T08:39:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS基础之六：原型和原型链">
+<meta name="twitter:description" content="6.1 原型和prototype首先，有个小概念性的东西需要记住，虽然prototype译为“原型”，但是原型和prototype是两码事:  原型和prototype只针对于对象，基本数据类型不是对象，没有原型和prototype。更确切讲，只针对ECMA对象，那些宿主对象（如：document）就因浏览器不同，可能不同了 所有的对象都有原型，但是，不是所有的对象都有prototype 只有那些">
+  
+    <link rel="alternate" href="/atom.xml" title="VeeQun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">VeeQun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个前端人的装逼博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vqun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-prototype" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/js-prototype/" class="article-date">
+  <time datetime="2017-05-31T08:37:31.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS基础之六：原型和原型链
+    </h1>
+  
+
+      </header>
+    
+    <aside class="article-aside">
+      <a data-url="https://vqun.github.io/js-prototype/" data-id="cj3cqo2qu000iz5vxqsisvedo" data-title="JS基础之六：原型和原型链" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+
+    </aside>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="6-1-原型和prototype"><a href="#6-1-原型和prototype" class="headerlink" title="6.1 原型和prototype"></a>6.1 原型和prototype</h3><p>首先，有个小概念性的东西需要记住，虽然prototype译为“原型”，但是<code>原型和prototype是两码事</code>:</p>
+<ul>
+<li>原型和prototype只针对于<code>对象</code>，基本数据类型不是对象，没有原型和prototype。更确切讲，只针对ECMA对象，那些宿主对象（如：document）就因浏览器不同，可能不同了</li>
+<li>所有的<code>对象</code>都有原型，但是，不是所有的<code>对象</code>都有prototype</li>
+<li>只有那些有[[Call]]（参见ECMA262第三版<code>8.6.2 Internal Properties and Methods</code>，ECMA262第五版<code>8.6.2 Object Internal Properties and Methods</code>）属性的对象。目前来讲，就是指那function(typeof O == “function”)</li>
+</ul>
+<p>OK，当然，你说第三条不对，比如下面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = &#123;&#125;, b = &#123;&#125;;</div><div class="line">b.prototype = a;</div></pre></td></tr></table></figure>
+<p>是啊，如果你要这么玩，我也没办法，你自己好好玩吧。</p>
+<p>OK，接下来我们讲的原型不区分这些，统一成一个概念。</p>
+<h3 id="6-1-1-什么是原型"><a href="#6-1-1-什么是原型" class="headerlink" title="6.1.1 什么是原型"></a>6.1.1 什么是原型</h3><p>Ok，那什么是原型呢？其实，我也不知道。宽泛的理解呢，对象的原型就是指对象的属性、方法从哪里<code>继承</code>而来。这个继承和其他语言（如C/C++，java）的继承不是一个概念。这也是为什么，我一直以来的观点是：<code>JS没有继承</code>。</p>
+<p>关于这个继承，不说太多。人各有各的观点，只要你的理解对于你的程序没有啥问题，那就应该百家争鸣哈。</p>
+<p>简单看下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = &#123;&#125;, b = <span class="keyword">new</span> <span class="built_in">String</span>();</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> foo;</div><div class="line"></div><div class="line"><span class="comment">// a的原型是？</span></div><div class="line"><span class="comment">// b的原型是？</span></div><div class="line"><span class="comment">// c的原型是？</span></div></pre></td></tr></table></figure>
+<p>因为太简单，以至于答案啥的我不太想说了：a的原型是Object.prototype，b的原型是String.prototype，c的原型是foo.prototype（在这个例子里，其实就内部做的一个new Object()）</p>
+<p>曾经有人在面试时被问到了这么个问题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">bar.prototype = <span class="keyword">new</span> foo;</div><div class="line"><span class="comment">// 问：bar的原型是什么？</span></div></pre></td></tr></table></figure>
+<p>这个问题就直指了最开始说到的：原型和prototype是两码事。这个例子中bar的原型不是new foo对象，而是Function.prototype。而bar.prototype是new bar对象的原型。</p>
+<h3 id="6-1-2-原型链"><a href="#6-1-2-原型链" class="headerlink" title="6.1.2 原型链"></a>6.1.2 原型链</h3><p>原型本身是一个对象，而我们在上述已经说过，对象都有原型。于是乎，原型的原型的原型…就构成了原型链。</p>
+<ul>
+<li><code>原型链本质是一堆对象的引用链</code>。这个有点像那个链表哈</li>
+<li>原型链全部以<code>Object.prototype</code>结束</li>
+<li>原型链用于<code>对象属性查找</code></li>
+<li>in操作符会沿着原型链遍历，for…in…中的in也是</li>
+<li>判断属性是否对象自有，使用hasOwnProperty方法</li>
+<li>链上的属性，无法直接通过对象删除</li>
+</ul>
+<p>顺带也扯一下<code>in</code>和<code>for...in...</code>两个<code>in</code>的差别：<code>in</code>不管属性的property，而<code>for...in...</code>需要确定属性的property是<code>DontEnum=false</code>，即对象是可遍历的，才能被<code>for...in...</code>捕获。</p>
+<p><code>for...in...</code>的这个特性，也就是为什么JS界里有一条规则：<code>不要拿for...in...去遍历数组</code>。见下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.hehe = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;<span class="built_in">console</span>.log(<span class="number">1</span>)&#125;</div><div class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="comment">// 见证奇迹的时刻到了</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> k <span class="keyword">in</span> arr)&#123;</div><div class="line">  <span class="built_in">console</span>.log(arr[k]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行上述代码，你会发现，hehe的那个function也被console.log出来了，原因就是刚才顺带一扯，因为ECMA262规定：<code>自定义的方法是可遍历的</code>。</p>
+<p>当查找对象属性时候，解释器会沿着原型链查找，如果找到，则返回第一次找到的属性值，如果整个链上没有找到，则返回undefined。也就是说，对象查找时，解释器会先在对象本身中查找，如果没有，就在对象的原型中查找，如果也没有，就在原型的原型中查找，如此，直到在某个原型中找到返回相应的值，或者 返回undefined。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">a.prototype.b = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> t = <span class="keyword">new</span> a;</div><div class="line"><span class="built_in">console</span>.log(t.b); <span class="comment">// 1, 在a.prototype中找到b</span></div><div class="line"><span class="built_in">console</span>.log(t.toString()) <span class="comment">// [object Object], 在Object.prototype中找到toString</span></div></pre></td></tr></table></figure>
+<p>hasOwnProperty方法是对象方法，接收一个参数P，P就是想要检测的属性名（字符串）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">a.prototype.b = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> t = <span class="keyword">new</span> a;</div><div class="line"><span class="built_in">console</span>.log(t.hasOwnProperty(<span class="string">"b"</span>)) <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(t.hasOwnProperty(<span class="string">"toString"</span>)); <span class="comment">// false，在Object.prototype中找到toString，不是a自有属性</span></div></pre></td></tr></table></figure>
+<p>delete操作符只能删除对象自有属性，不能直接删除对象原型链上的属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">a.prototype.b = <span class="number">1</span>;</div><div class="line"><span class="keyword">var</span> t = <span class="keyword">new</span> a;</div><div class="line">t.c = <span class="number">10</span>;</div><div class="line"><span class="built_in">console</span>.log(t.b) <span class="comment">// 1</span></div><div class="line"><span class="built_in">console</span>.log(t.c) <span class="comment">// 10</span></div><div class="line"><span class="keyword">delete</span> t.b;</div><div class="line"><span class="keyword">delete</span> t.c;</div><div class="line"><span class="built_in">console</span>.log(t.b) <span class="comment">// 1</span></div><div class="line"><span class="built_in">console</span>.log(t.c) <span class="comment">// undefined</span></div></pre></td></tr></table></figure>
+<h2 id="也就这样，好像没啥可扯的了。。结束吧"><a href="#也就这样，好像没啥可扯的了。。结束吧" class="headerlink" title="也就这样，好像没啥可扯的了。。结束吧"></a>也就这样，好像没啥可扯的了。。结束吧</h2>
+      
+    </div>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/js-component/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          组件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/js-array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS基础之五：Array</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件/">组件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JS基础/" style="font-size: 15px;">JS基础</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/组件/" style="font-size: 10px;">组件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/js-component/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/js-prototype/">JS基础之六：原型和原型链</a>
+          </li>
+        
+          <li>
+            <a href="/js-array/">JS基础之五：Array</a>
+          </li>
+        
+          <li>
+            <a href="/js-object/">JS基础之四：Object</a>
+          </li>
+        
+          <li>
+            <a href="/js-number/">JS基础之三：Number</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 veequn@qq.com<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

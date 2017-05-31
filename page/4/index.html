@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>VeeQun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="VeeQun">
+<meta property="og:url" content="https://vqun.github.io/page/4/index.html">
+<meta property="og:site_name" content="VeeQun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VeeQun">
+  
+    <link rel="alternate" href="/atom.xml" title="VeeQun" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">VeeQun</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个前端人的装逼博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://vqun.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-basic-concepts" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/basic-concepts/" class="article-date">
+  <time datetime="2017-05-31T08:22:11.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/basic-concepts/">JS基本之一：基本概念</a>
+    </h1>
+  
+
+      </header>
+    
+    <aside class="article-aside">
+      <a data-url="https://vqun.github.io/basic-concepts/" data-id="cj3cq4t180005cyvxa8f5uwb6" data-title="JS基本之一：基本概念" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li></ul>
+
+    </aside>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-变量"><a href="#1-1-变量" class="headerlink" title="1.1 变量"></a>1.1 变量</h2><p>ECMA变量是松散型的，爱保存啥类型的数据都行。变量申明使用的是var，当然也可以不用。使用var，申明局部变量，不使用申明全局变量。不使用var是为JS界所鄙视的，所以，建议申明变量时，带上var。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">1</span>; <span class="comment">// x是局部变量，只在f</span></div><div class="line">  y = <span class="number">2</span>; <span class="comment">// y是全局变量</span></div><div class="line">&#125;</div><div class="line">f();</div><div class="line">alert(x); <span class="comment">// 报错</span></div><div class="line">alert(y); <span class="comment">// 2（当然，前提是你注释了上一句话）</span></div></pre></td></tr></table></figure>
+<p>变量有三个阶段：申明、赋值和使用。</p>
+<p>申明和赋值是两个完全不同的概念，解释器对于这两个阶段也是完全不同的，申明是在代码期（写代码时期，业界喜欢叫预编译还是啥的），赋值是在运行期。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a; <span class="comment">// 这是申明</span></div><div class="line">a = <span class="number">1</span>; <span class="comment">// 这是赋值</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="number">2</span>; <span class="comment">// 这句话，在代码期，解释器只做了var b；在运行期，做了b = 2</span></div></pre></td></tr></table></figure>
+<p>这也牵扯一下JS界都喜欢问的一个题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(c); <span class="comment">// undefined</span></div><div class="line"><span class="keyword">var</span> c = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<p>之所以是undefined，涉及到了所谓的“Hoisting”（变量提升）。变量提升里说了，变量申明会被提前，于是乎上述代码被等同于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> c;</div><div class="line">alert(c);</div><div class="line">c = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<p>这其实是因为申明和赋值在两个不同阶段。</p>
+<h2 id="1-2-区分大小写"><a href="#1-2-区分大小写" class="headerlink" title="1.2 区分大小写"></a>1.2 区分大小写</h2><p>这个你懂的</p>
+<h2 id="1-3-标识符"><a href="#1-3-标识符" class="headerlink" title="1.3 标识符"></a>1.3 标识符</h2><p>说一点，一般认为的标识符，是非保留字，以_、$、字母开头。实际上，还可以是Unicode、ASIIC，因此，连中文都可以直接作为标签符的，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> 你好 = <span class="number">1</span>;</div><div class="line">alert(你好);</div><div class="line"><span class="keyword">var</span> \u7788 = <span class="number">2</span>;</div><div class="line">alert(\u7788);</div></pre></td></tr></table></figure>
+<p>上面两个都可以正常运行。当然，这种用写法在实际编程里是不推荐的，只是曾经有吃饱没事干的面试官出过这种面试题，算是普及一下</p>
+<h2 id="1-4-注释"><a href="#1-4-注释" class="headerlink" title="1.4 注释"></a>1.4 注释</h2><p>两种注释风格，和C/C++类似，单行注释和多行注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 单选注释</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> * 多行注释</div><div class="line"> */</div></pre></td></tr></table></figure>
+<h2 id="1-5-分号"><a href="#1-5-分号" class="headerlink" title="1.5 分号"></a>1.5 分号</h2><p>关于分号，编程习惯就是在语句的结尾加分号。当然，如果你想装逼，好好看ECMA262，里面告诉你了什么时候要加分号，什么时候不用。</p>
+<h2 id="1-6-关键字和保留字"><a href="#1-6-关键字和保留字" class="headerlink" title="1.6 关键字和保留字"></a>1.6 关键字和保留字</h2><p>曾经有人问，关键字和保留字有什么区别。其实，从实际角度讲呢，因为你都不会去当成标识符，所以没区别；概念角度讲呢，关键字是真不能用（加了引号可以），保留字呢，目前可用，以后估计就不能用了。</p>
+<h2 id="1-7-数据类型"><a href="#1-7-数据类型" class="headerlink" title="1.7 数据类型"></a>1.7 数据类型</h2><p>五种基本类型+一种引用类型。五种基本类型：Undefined、Null、Number、String、Boolean，一种引用类型：Object。</p>
+<p>typeof：这是一个比较让人无语的操作符，以致于业界都不喜欢用它来判断数据类型。其实，让人无语，主要是因为对null，array使用typeof时，返回的不是期望的“null”和“array”，而是“object”。这个其实没什么，从理解角度讲，是挺合理的，null本身就是代表的空对象，array本身在JS里根本没这个类型。当然，Number、Boolean等直接new出来的，typeof结果也是“object”。</p>
+<h2 id="1-8-操作符"><a href="#1-8-操作符" class="headerlink" title="1.8 操作符"></a>1.8 操作符</h2><p>操作符都有返回值。合理利用这个返回值，可以提升你的代码逼格。比如，一般人都这么写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">  <span class="string">"a"</span>: &#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"hello"</span>,</div><div class="line">    <span class="string">"value"</span>: <span class="number">1</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"b"</span>: &#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"world"</span>,</div><div class="line">    <span class="string">"value"</span>: <span class="number">2</span></div><div class="line">  &#125;</div><div class="line">&#125;, tmp, n, ret = &#123;&#125;;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> k <span class="keyword">in</span> obj)&#123;</div><div class="line">  tmp = obj[k];</div><div class="line">  n = tmp.name;</div><div class="line">  !!n &amp;&amp; ret[n] = tmp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>博主喜欢这么装逼：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">  <span class="string">"a"</span>: &#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"hello"</span>,</div><div class="line">    <span class="string">"value"</span>: <span class="number">1</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"b"</span>: &#123;</div><div class="line">    <span class="string">"name"</span>: <span class="string">"world"</span>,</div><div class="line">    <span class="string">"value"</span>: <span class="number">2</span></div><div class="line">  &#125;</div><div class="line">&#125;, tmp, n, ret = &#123;&#125;;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> k <span class="keyword">in</span> obj)</div><div class="line">  !!(n = (tmp = obj[k]).name) &amp;&amp; ret[n] = tmp;</div></pre></td></tr></table></figure>
+<p>有木有觉得逼格一样子提升了好几个档次，连for循环的花括号都省了。。。其实，我会告诉你，只是因为后者的性能更高，所以我才用的。</p>
+<h2 id="1-9-语句"><a href="#1-9-语句" class="headerlink" title="1.9 语句"></a>1.9 语句</h2><p>语句包括：if、do-while、while、for、for-in、label、break和continue、with以及switch。除了with，其他的都很简单，只要记得JS没有块作用域就可以了。</p>
+<p>关于with，“with会在原作用域链里插入新的作用域，影响性能”这句话是JS界里流行的几句话[1]之一。确实，因为作用域链的问题，with存在性能问题，不过，很多模版引擎却用了with来实现，如underscoreJs内置的template，其“编译”完之后的代码里，就用了with来遍历对象，以达到在模版里直接使用对象的属性名。</p>
+<p>[1]JS界里流行的几句话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 变量申明会被提到最前面</div><div class="line">2. eval是邪恶的</div><div class="line">3. with会在原作用域链里插入新的作用域，影响性能</div></pre></td></tr></table></figure>
+<h2 id="1-10-函数"><a href="#1-10-函数" class="headerlink" title="1.10 函数"></a>1.10 函数</h2><p>函数定义有三种方式：函数申明、函数表达式和构造函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 函数申明</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"declaration"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 函数表达式</span></div><div class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"expression"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 构造函数</span></div><div class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"console.log('constructor')"</span>);</div></pre></td></tr></table></figure>
+<p>函数申明会在预编译阶段就确定，表达式和构造函数是在运行时确定。这再牵扯一下业界面试题喜欢玩的一个题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">alert(a); <span class="comment">// 输出那个function</span></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</div><div class="line">alert(a); <span class="comment">// 输出1</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"function"</span>)</div><div class="line">&#125;</div><div class="line">alert(a); <span class="comment">// 输出1</span></div></pre></td></tr></table></figure>
+<p>上述代码中，由于在预编译时，function a(){…}确定了，因此，在运行时，第一个alert就将这个函数申明alert出了，而第二个第三个alert，就很明显了。</p>
+
+      
+    </div>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JS基础/">JS基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/组件/">组件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JS基础/" style="font-size: 15px;">JS基础</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/组件/" style="font-size: 10px;">组件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/js-component/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/js-prototype/">JS基础之六：原型和原型链</a>
+          </li>
+        
+          <li>
+            <a href="/js-array/">JS基础之五：Array</a>
+          </li>
+        
+          <li>
+            <a href="/js-object/">JS基础之四：Object</a>
+          </li>
+        
+          <li>
+            <a href="/js-number/">JS基础之三：Number</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 veequn@qq.com<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
